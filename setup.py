@@ -11,7 +11,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 
 
-requires = [#'pyramid',
+requires = ['jinja2'
            ]
 
 class PyTest(TestCommand):
