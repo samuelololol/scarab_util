@@ -16,9 +16,9 @@ def main():
 class ScarabCmd(object):
     def __init__(self):
         description = "CLI tool for scarab web framework"
-        usage = """scarab <command> [<args>]
+        usage = """scarab <sub_command> [<args>]
 
-        The available commands are:
+        The available sub_commands are:
         generate  Generate API server component
         show      Show API server related status
         """
@@ -27,37 +27,45 @@ class ScarabCmd(object):
                 formatter_class=RawTextHelpFormatter,
                 usage=usage,
                 )
-        parser.add_argument('command', help='Subcommand to run')
+        parser.add_argument('subcommand', help='Subcommand to run')
         args = parser.parse_args(sys.argv[1:2])
-        if not hasattr(self, args.command):
-            print 'Unrecognized command'
+        if not hasattr(self, args.subcommand):
+            print 'Unrecognized subcommand'
             parser.print_help()
             exit(1)
-        return getattr(self, args.command)()
+        return getattr(self, args.subcommand)()
 
     def generate(self):
         description='Generate API server component'
-        usage = """scarab generate -t TYPE [<args>]
+        #usage = """scarab generate -t TYPE [<args>]
 
-        The available TYPEs are:
-        api         Add route, api, service, and test
-        page        Add route, page, service, and test
-        model       Add model, initial script, and test
-        """
+        #The available TYPEs are:
+        #api         Add route, api, service, and test
+        #page        Add route, page, service, and test
+        #model       Add model, initial script, and test
+        #"""
 
         parser = argparse.ArgumentParser(
                 description=textwrap.dedent(description),
                 formatter_class=RawTextHelpFormatter,
-                usage=usage,
+                #usage=usage,
                 )
 
         parser.add_argument('-t', '--type',
                             required=True,
                             type=str,
                             choices=['api', 'page', 'model'],
-                            help='component type')
+                            help='Component type')
+        parser.add_argument('-p', '--path',
+                            default='.',
+                            type=str,
+                            help='scarab root folder path')
         args = parser.parse_args(sys.argv[2:])
+        args.path = os.path.abspath(args.path)
         print args
+
+    def show(self):
+        print 'under construction'
 
 
 
