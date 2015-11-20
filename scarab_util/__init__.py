@@ -49,7 +49,7 @@ class ScarabCmd(object):
                             choices=['api', 'page', 'model'],
                             help='Component type')
         parser.add_argument('-p', '--path',
-                            required=True,
+                            default='',
                             type=str,
                             help='API URI')
         parser.add_argument('-n', '--name',
@@ -59,7 +59,7 @@ class ScarabCmd(object):
         parser.add_argument('-m', '--method',
                             default='GET',
                             type=str,
-                            choices=['GET', 'POST', 'PUT', 'DELETE'],
+                            choices=['GET', 'POST', 'PUT', 'DELETE', 'ALL4'],
                             help='API request method')
         parser.add_argument('-v', '--version',
                             default='1',
