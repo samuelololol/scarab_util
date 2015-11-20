@@ -12,7 +12,6 @@ def generate_api(folder_root_path, path, method, name, version):
 
 def _add_new_route(folder_root_path, path, name, method, api_version):
     print 'new route'
-    pass
 
 def _add_new_api(folder_root_path, api_name, name, method, api_version):
     print 'new api'
@@ -24,16 +23,7 @@ def _add_new_api(folder_root_path, api_name, name, method, api_version):
 
 def _add_new_service(folder_root_path, service_name):
     print 'new service'
-    pass
 
 def _add_new_model(folder_root_path, model_name):
     print 'new model'
-    pass
 
-
-
-def main():
-    pass
-
-if __name__ == '__main__':
-    main()
