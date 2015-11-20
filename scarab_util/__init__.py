@@ -12,7 +12,8 @@ import os
 import generate
 
 class ScarabCmd(object):
-    def __init__(self):
+    def __init__(self, command_string):
+        self.command_string = command_string
         description = "CLI tool for scarab web framework"
         usage = """scarab <sub_command> [<args>]
 
@@ -27,12 +28,15 @@ class ScarabCmd(object):
                 usage=usage,
                 )
         parser.add_argument('subcommand', help='Subcommand to run')
-        args = parser.parse_args(sys.argv[1:2])
+        args = parser.parse_args(self.command_string[1:2])
         if not hasattr(self, args.subcommand):
             print 'Unrecognized subcommand'
             parser.print_help()
             exit(1)
-        return getattr(self, args.subcommand)()
+        getattr(self, args.subcommand)()
+
+    def _reeval(self, subcommand):
+        return getattr(self, subcommand)()
 
     def generate(self):
         description='Generate scarab component'
@@ -47,7 +51,7 @@ class ScarabCmd(object):
                             choices=['api', 'page', 'model'],
                             help='Component type')
 
-        args, others = parser.parse_known_args(sys.argv[2:])
+        args, others = parser.parse_known_args(self.command_string[2:])
         return getattr(self, args.type)()
 
     def show(self):
@@ -81,20 +85,20 @@ class ScarabCmd(object):
                             default='.',
                             help='scarab root folder path')
 
-        args = parser.parse_args(sys.argv[2:])
+        args = parser.parse_args(self.command_string[2:])
 
         #default values
         args.rootpath = os.path.abspath(args.rootpath)
         if args.path == '': args.path = '/' + args.name
-        print 'debug', args
+        #print 'debug', args
 
-        generate.generate_api(
-                args.rootpath,
-                path=args.path,
-                method=args.method,
-                name=args.name,
-                version=args.version
-                )
+        return generate.generate_api(
+                            args.rootpath,
+                            path=args.path,
+                            method=args.method,
+                            name=args.name,
+                            version=args.version
+                            )
 
 
 class GenerateAction(argparse.Action):
@@ -103,7 +107,7 @@ class GenerateAction(argparse.Action):
 
 
 def main():
-    ScarabCmd()
+    ScarabCmd(sys.argv)
 
 if __name__ == '__main__':
     main()

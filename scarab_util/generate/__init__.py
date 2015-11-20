@@ -18,6 +18,7 @@ def generate_api(folder_root_path, name, method, path, version):
     if success:
         success = _add_new_api(folder_root_path, api_name=name, route_name=name, file_name=name,
             method=method, api_version=version)
+    return success
 
 def _add_new_route(folder_root_path, route_name, path, api_version):
     print 'Generating route ... ',
