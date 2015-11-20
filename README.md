@@ -1,11 +1,13 @@
-scarab_util README
-==================
+# scarab_util
 
-Getting Started
----------------
+## INSTALL
 
-- cd <directory containing this file>
+```
+$ venv/bin/python setup.py install
+```
 
-- $venv/bin/python setup.py develop
+## RUN
 
-- $venv/bin/scarab generate api api1
+```
+$ venv/bin/scarab generate api api1
+```
