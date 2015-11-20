@@ -1,2 +1,3 @@
 include *.txt *.ini *.cfg *.rst
 recursive-include scarab_util *.ico *.png *.css *.gif *.jpg *.pt *.txt *.mak *.mako *.js *.html *.xml
+prune scarab_util/test
