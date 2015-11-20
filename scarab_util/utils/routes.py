@@ -8,9 +8,8 @@ api_version = 1
 
 def api_routes(config):
     #apis
-    <<<<<<<
-    right here
-    <<<<<<<
+    #scarab_util generated routes
+    config.add_route('api_test',  api_prefix + '1' + '/test')
     config.add_route('api_login',  api_prefix + str(api_version) + '/login')
     config.add_route('api_logout', api_prefix + str(api_version) + '/logout')
 

@@ -82,7 +82,11 @@ class ScarabCmd(object):
                             help='scarab root folder path')
 
         args = parser.parse_args(sys.argv[2:])
+
+        #default values
         args.rootpath = os.path.abspath(args.rootpath)
+        if args.path == '': args.path = '/' + args.name
+        print 'debug', args
 
         generate.generate_api(
                 args.rootpath,
@@ -91,7 +95,6 @@ class ScarabCmd(object):
                 name=args.name,
                 version=args.version
                 )
-        print args
 
 
 class GenerateAction(argparse.Action):
