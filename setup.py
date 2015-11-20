@@ -46,7 +46,7 @@ setup(name='scarab_util',
       cmdclass = {'test': PyTest},
       entry_points= """\
       [console_scripts]
-      scarab_util = scarab_util:main
+      scarab = scarab_util:main
       """,
       )
 
