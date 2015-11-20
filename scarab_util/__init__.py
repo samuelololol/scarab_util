@@ -8,21 +8,32 @@ from argparse import RawTextHelpFormatter
 import textwrap
 
 def main():
-    #print "hello scarab_util"
-    #pass
     description = """\
     CLI tool for scarab web framework.
 
-    scarab -a generate 
-    scarab -a show
+    scarab generate 
+    scarab show
     ...
     """
-    usage = "usage: %prog -a {action} [parameters]"
+    #usage = "usage: %prog <command> [parameters]"
+    # top-level parser
     parser = argparse.ArgumentParser(
             description=textwrap.dedent(description),
             formatter_class=RawTextHelpFormatter)
-            #description=description)
+
+    subparsers = parser.add_subparsers(help='sub-command help')
+
+    # generate command
+    generate_parser = subparsers.add_parser('generate', help='generate help')
+    generate_parser.add_argument(
+            '-t', '--type',
+            required=True,
+            type=str,
+            choices=['api','page','service','model'],
+            help='component type')
+
     args = parser.parse_args()
+    print args
 
 if __name__ == '__main__':
     main()
