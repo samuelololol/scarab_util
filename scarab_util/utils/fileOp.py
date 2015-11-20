@@ -3,7 +3,6 @@
 __date__= 'Nov 20, 2015 '
 __author__= 'samuel'
 
-import os
 
 def InsertAbove(file_path, insert_text, target_text):
     _insert(file_path, insert_text, target_text, under=False)
@@ -49,7 +48,6 @@ def _normalize_text(text_src, indent_len):
         else:
             text_content.append(line[(-1)*indent_diff:])
     return text_content
-
 
 
 def main():
