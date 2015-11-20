@@ -9,6 +9,8 @@ import textwrap
 import sys
 import os
 
+import generate
+
 def main():
     ScarabCmd()
 
@@ -47,11 +49,38 @@ class ScarabCmd(object):
                             choices=['api', 'page', 'model'],
                             help='Component type')
         parser.add_argument('-p', '--path',
+                            required=True,
+                            type=str,
+                            help='API URI')
+        parser.add_argument('-n', '--name',
+                            required=True,
+                            type=str,
+                            help='API name')
+        parser.add_argument('-m', '--method',
+                            default='GET',
+                            type=str,
+                            choices=['GET', 'POST', 'PUT', 'DELETE'],
+                            help='API request method')
+        parser.add_argument('-v', '--version',
+                            default='1',
+                            type=str,
+                            help='API version')
+        parser.add_argument('-r', '--rootpath',
                             default='.',
                             type=str,
                             help='scarab root folder path')
+
         args = parser.parse_args(sys.argv[2:])
-        args.path = os.path.abspath(args.path)
+        args.rootpath = os.path.abspath(args.rootpath)
+
+        if args.type == 'api':
+            generate.generate_api(
+                    args.rootpath,
+                    path=args.path,
+                    method=args.method,
+                    name=args.name,
+                    version=args.version
+                    )
         print args
 
     def show(self):
