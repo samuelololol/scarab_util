@@ -52,8 +52,16 @@ def _normalize_text(text_src, indent_len):
 
 def main():
     import subprocess
-    print subprocess.Popen(['cp', 'mytext.ori', 'mytext.txt']).communicate()[0]
-    InsertUnder('./mytext.txt', ['<<<<<<<\n','right here\n', '<<<<<<<\n'], '123')
+    print subprocess.Popen(['cp', 'routes.py.ori', 'routes.py']).communicate()[0]
+
+    to_add_string_list = [
+            '               <<<<<<<\n',
+            '               right here\n',
+            '               <<<<<<<\n'
+            ]
+    to_match_string = "#apis"
+
+    InsertUnder('./routes.py', to_add_string_list, to_match_string)
 
 if __name__ == '__main__':
     main()

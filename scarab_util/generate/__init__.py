@@ -3,6 +3,8 @@
 __date__= 'Nov 20, 2015 '
 __author__= 'samuel'
 
+from scarab_util.utils.fileOp import InsertAbove
+from scarab_util.utils.fileOp import InsertAbove
 
 def generate_api(folder_root_path, path, method, name, version):
     _add_new_route(folder_root_path, path=path, name=name, method=method,

@@ -11,9 +11,6 @@ import os
 
 import generate
 
-def main():
-    ScarabCmd()
-
 class ScarabCmd(object):
     def __init__(self):
         description = "CLI tool for scarab web framework"
@@ -38,55 +35,72 @@ class ScarabCmd(object):
         return getattr(self, args.subcommand)()
 
     def generate(self):
-        description='Generate API server component'
+        description='Generate scarab component'
         parser = argparse.ArgumentParser(
                 description=textwrap.dedent(description),
                 formatter_class=RawTextHelpFormatter,
                 )
         parser.add_argument('-t', '--type',
                             required=True,
+                            action=GenerateAction,
                             type=str,
                             choices=['api', 'page', 'model'],
                             help='Component type')
-        parser.add_argument('-p', '--path',
-                            default='',
-                            type=str,
-                            help='API URI')
-        parser.add_argument('-n', '--name',
-                            required=True,
-                            type=str,
-                            help='API name')
-        parser.add_argument('-m', '--method',
-                            default='GET',
-                            type=str,
-                            choices=['GET', 'POST', 'PUT', 'DELETE', 'ALL4'],
-                            help='API request method')
-        parser.add_argument('-v', '--version',
-                            default='1',
-                            type=str,
-                            help='API version')
-        parser.add_argument('-r', '--rootpath',
-                            default='.',
-                            type=str,
-                            help='scarab root folder path')
 
-        args = parser.parse_args(sys.argv[2:])
-        args.rootpath = os.path.abspath(args.rootpath)
-
-        if args.type == 'api':
-            generate.generate_api(
-                    args.rootpath,
-                    path=args.path,
-                    method=args.method,
-                    name=args.name,
-                    version=args.version
-                    )
-        print args
+        args, others = parser.parse_known_args(sys.argv[2:])
+        return getattr(self, args.type)()
 
     def show(self):
         print """scarab show: under construction
         """
 
+    def _generate_api(self):
+        description='Generate scarab api component'
+        parser = argparse.ArgumentParser(
+                description=textwrap.dedent(description),
+                formatter_class=RawTextHelpFormatter,
+                )
+        parser.add_argument('-t', '--type', type=str,
+                            required=True,
+                            choices=['api'],
+                            help='Component type')
+        parser.add_argument('-p', '--path', type=str,
+                            default='',
+                            help='API URI')
+        parser.add_argument('-n', '--name', type=str,
+                            required=True,
+                            help='API name')
+        parser.add_argument('-m', '--method', type=str,
+                            default='GET',
+                            choices=['GET', 'POST', 'PUT', 'DELETE', 'ALL4'],
+                            help='API request method')
+        parser.add_argument('-v', '--version', type=str,
+                            default='1',
+                            help='API version')
+        parser.add_argument('-r', '--rootpath', type=str,
+                            default='.',
+                            help='scarab root folder path')
+
+        args = parser.parse_args(sys.argv[2:])
+        args.rootpath = os.path.abspath(args.rootpath)
+
+        generate.generate_api(
+                args.rootpath,
+                path=args.path,
+                method=args.method,
+                name=args.name,
+                version=args.version
+                )
+        print args
+
+
+class GenerateAction(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        setattr(namespace, self.dest, '_generate_'+values)
+
+
+def main():
+    ScarabCmd()
 
 if __name__ == '__main__':
     main()
