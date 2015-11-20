@@ -1,0 +1,5 @@
+scarab_util.egg*
+build*/
+dist*/
+*pyc
+.cache/*
