@@ -19,10 +19,11 @@ def add_new_route(folder_root_path, route_name, path, api_version):
             if route_name in line:
                 print 'fail, route_name("%s") already exist.' % route_name
                 return False
-    to_match_string = 'api_prefix +'
+    #to_match_string = 'api_prefix +'
+    to_match_string = 'config.add_route('
     to_add_string_list = [
-        "#scarab_util generated routes\n",
-        "config.add_route('%s',  api_prefix + '%s' + '%s')\n" % (route_name, api_version, path)
+        "config.add_route('%s',  api_prefix + '%s' + '%s') #scarab_util generated\n" %\
+                         (route_name,   api_version, path)
         ]
     InsertAbove(route_file_path, to_add_string_list, to_match_string)
     print 'done'
