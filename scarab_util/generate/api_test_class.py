@@ -7,7 +7,7 @@ import sys
 import os
 import jinja2
 
-def add_new_api_test(folder_root_path, api_name, route_name, file_name, api_version):
+def add_new_api_test(folder_root_path, api_name, path=path, route_name, file_name, api_version):
     print 'Generating api functional test script ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -22,7 +22,7 @@ def add_new_api_test(folder_root_path, api_name, route_name, file_name, api_vers
 
         variables = {'api_classname': api_name[0].upper() + api_name[1:].lower() + 'API',
                      'api_name':      api_name,
-                     'route_name':    route_name,
+                     'path':          path,
                      'api_version':   api_version
                     }
         outputText = template.render(variables)

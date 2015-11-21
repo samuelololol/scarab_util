@@ -13,6 +13,8 @@ def generate_api(folder_root_path, name, path, version):
     route_name = ''
     if name[0:4] != 'api_':
         route_name = 'api_%s' % name
+    if path[0] != '/':
+        path = '/' + path
     file_name = name + '.py'
     test_file_name = 'test_' + file_name
 
@@ -29,6 +31,7 @@ def generate_api(folder_root_path, name, path, version):
                                   file_name=file_name)
     if success:
         success = add_new_api_test(folder_root_path, api_name=name,
+                                   path=path,
                                    route_name=route_name,
                                    file_name=test_file_name,
                                    api_version=version)
