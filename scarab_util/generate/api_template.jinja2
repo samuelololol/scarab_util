@@ -1,0 +1,98 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from pyramid.view import view_config
+from pyramid.view import view_defaults
+from pyramid.view import forbidden_view_config
+from pyramid.response import Response
+from pyramid.httpexceptions import (
+        HTTPFound,
+        HTTPCreated,
+        HTTPNoContent,
+        HTTPUnprocessableEntity,
+        HTTPInternalServerError,
+        HTTPUnauthorized,
+        )
+
+from formencode import Schema
+from formencode import validators
+from formencode import Invalid
+
+from scarab.services import {{service_name}}
+
+#class Schema_{{api_name}}_get(Schema):
+#    parameter1 = formencode.validators.String(strip=False, not_empty=True)
+#    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
+#    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
+#
+#class Schema_{{api_name}}_post(Schema):
+#    parameter1 = formencode.validators.String(strip=False, not_empty=True)
+#    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
+#    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
+#
+#class Schema_{{api_name}}_put(Schema):
+#    parameter1 = formencode.validators.String(strip=False, not_empty=True)
+#    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
+#    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
+#
+#class Schema_{{api_name}}_delete(Schema):
+#    parameter1 = formencode.validators.String(strip=False, not_empty=True)
+#    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
+#    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
+
+
+
+
+@view_defaults(renderer='json')
+class {{api_classname}}(object):
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    @view_config(route_name='{{route_name}}', request_method='POST', #permission='view')
+                )
+    def {{route_name}}_get(self):
+        #-----------
+        #create logic
+        #-----------
+        # data = {{service_name}}.func()
+        #-----------
+        #verify form data
+        #-----------
+        # {{api_name}}_form = {'parameter1': self.request.POST['parameter1'],
+        #      'parameter2': self.request.POST['parameter2']}
+        # params = Schema_{{api_name}}_post.to_python(login_form)
+   
+        return {'name': '{{api_name}}', 'method': 'POST'}
+
+    @view_config(route_name='{{route_name}}', request_method='GET', #permission='view')
+                )
+    def {{route_name}}_get(self):
+        #-----------
+        #read logic
+        #-----------
+        # data = {{service_name}}.func()
+        #-----------
+        #verify form body
+        #-----------
+        # params = Schema_{{api_name}}_get.to_python(self.request.json_body)
+
+        return {'name': '{{api_name}}', 'method': 'GET'}
+
+    @view_config(route_name='{{route_name}}', request_method='PUT', #permission='view')
+                )
+    def {{route_name}}_get(self):
+        #-----------
+        #update logic
+        #-----------
+        # data = {{service_name}}.func()
+        return {'name': '{{api_name}}', 'method': 'PUT'}
+
+    @view_config(route_name='{{route_name}}', request_method='DELETE', #permission='view')
+                )
+    def {{route_name}}_get(self):
+        #-----------
+        #delete logic
+        #-----------
+        # data = {{service_name}}.func()
+        return {'name': '{{api_name}}', 'method': 'DELETE'}
+

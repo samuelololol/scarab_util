@@ -20,10 +20,7 @@ def ScarabRootPath(request):
     models_dir    = os.path.join(folder_name, 'models')
     scripts_dir   = os.path.join(folder_name, 'scripts')
 
-    all_folders = [apis_dir, services_dir,
-                   pages_dir, templates_dir,
-                   models_dir, scripts_dir]
-    for folder in all_folders:
+    for folder in [apis_dir, services_dir, pages_dir, templates_dir, models_dir, scripts_dir]:
         os.mkdir(folder)
 
     def fin():
