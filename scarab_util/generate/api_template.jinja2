@@ -50,7 +50,7 @@ class {{api_classname}}(object):
 
     @view_config(route_name='{{route_name}}', request_method='POST', #permission='view')
                 )
-    def {{route_name}}_get(self):
+    def {{route_name}}_post(self):
         #-----------
         #create logic
         #-----------
@@ -80,7 +80,7 @@ class {{api_classname}}(object):
 
     @view_config(route_name='{{route_name}}', request_method='PUT', #permission='view')
                 )
-    def {{route_name}}_get(self):
+    def {{route_name}}_put(self):
         #-----------
         #update logic
         #-----------
@@ -89,7 +89,7 @@ class {{api_classname}}(object):
 
     @view_config(route_name='{{route_name}}', request_method='DELETE', #permission='view')
                 )
-    def {{route_name}}_get(self):
+    def {{route_name}}_delete(self):
         #-----------
         #delete logic
         #-----------
