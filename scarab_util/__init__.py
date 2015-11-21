@@ -39,8 +39,8 @@ class ScarabCmd(object):
         Available types are:
 
         api         Generate URI entry, API file, Service file and Test file
-        page        Generate URI entry, Page file, Template file and Test file
         model       Generate Model file, initial Script entries and Test file
+        page        Generate URI entry, Page file, Template file and Test file
         """
         parser = argparse.ArgumentParser(
                 description=textwrap.dedent(description),
@@ -53,7 +53,7 @@ class ScarabCmd(object):
                             required=True,
                             action=GenerateAction,
                             type=str,
-                            choices=['api', 'page', 'model'],
+                            choices=['api', 'model', 'page'],
                             help='Component type')
 
         args, others = parser.parse_known_args(self.command_string[2:])
