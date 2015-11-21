@@ -6,7 +6,7 @@ __author__= 'samuel'
 import os
 import jinja2
 
-def add_new_service(folder_root_path, service_name):
+def add_new_service(folder_root_path, service_name, file_name):
     print 'Generating service ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -16,7 +16,7 @@ def add_new_service(folder_root_path, service_name):
                 'service_template.jinja2')
         template = templateEnv.get_template(API_TEMPLATE_FILE)
 
-        service_file_path = os.path.join(os.path.join(folder_root_path, 'services'), service_name + '.py')
+        service_file_path = os.path.join(os.path.join(folder_root_path, 'services'), file_name)
         variables = {'service_name': service_name}
         outputText = template.render(variables)
         with open(service_file_path, 'wb') as f:

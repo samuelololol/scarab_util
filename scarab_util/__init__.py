@@ -74,10 +74,6 @@ class ScarabCmd(object):
         parser.add_argument('-n', '--name', type=str,
                             required=True,
                             help='API name')
-        parser.add_argument('-m', '--method', type=str,
-                            default='GET',
-                            choices=['GET', 'POST', 'PUT', 'DELETE', 'ALL4'],
-                            help='API request method')
         parser.add_argument('-v', '--version', type=str,
                             default='1',
                             help='API version')
@@ -95,7 +91,6 @@ class ScarabCmd(object):
         return generate.generate_api(
                             args.rootpath,
                             path=args.path,
-                            method=args.method,
                             name=args.name,
                             version=args.version
                             )
