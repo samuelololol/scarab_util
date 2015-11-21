@@ -27,23 +27,28 @@ class ScarabCmd(object):
                 formatter_class=RawTextHelpFormatter,
                 usage=usage,
                 )
-        parser.add_argument('subcommand', help='Subcommand to run')
+        parser.add_argument('subcommand', choices=['generate', 'show'],
+                            help='Subcommand to run')
         args = parser.parse_args(self.command_string[1:2])
-        if not hasattr(self, args.subcommand):
-            print 'Unrecognized subcommand'
-            parser.print_help()
-            exit(1)
         getattr(self, args.subcommand)()
-
-    def _reeval(self, subcommand):
-        return getattr(self, subcommand)()
 
     def generate(self):
         description='Generate scarab component'
+        usage = """scarab generate -t <type>
+
+        Available types are:
+
+        api         Generate URI entry, API file, Service file and Test file
+        page        Generate URI entry, Page file, Template file and Test file
+        model       Generate Model file, initial Script entries and Test file
+        """
         parser = argparse.ArgumentParser(
                 description=textwrap.dedent(description),
                 formatter_class=RawTextHelpFormatter,
+                usage=usage,
+                add_help=False,
                 )
+
         parser.add_argument('-t', '--type',
                             required=True,
                             action=GenerateAction,
@@ -52,13 +57,13 @@ class ScarabCmd(object):
                             help='Component type')
 
         args, others = parser.parse_known_args(self.command_string[2:])
-        return getattr(self, args.type)()
+        getattr(self, args.type)(self.command_string[2:])
 
     def show(self):
         print """scarab show: under construction
         """
 
-    def _generate_api(self):
+    def _generate_api(self, cmd_string):
         description='Generate scarab api component'
         parser = argparse.ArgumentParser(
                 description=textwrap.dedent(description),
@@ -81,19 +86,19 @@ class ScarabCmd(object):
                             default='.',
                             help='scarab root folder path')
 
-        args = parser.parse_args(self.command_string[2:])
+        args = parser.parse_args(cmd_string)
 
         #default values
         args.rootpath = os.path.abspath(args.rootpath)
         if args.path == '': args.path = '/' + args.name
         #print 'debug', args
 
-        return generate.generate_api(
-                            args.rootpath,
-                            path=args.path,
-                            name=args.name,
-                            version=args.version
-                            )
+        generate.generate_api(
+                     args.rootpath,
+                     path=args.path,
+                     name=args.name,
+                     version=args.version
+                     )
 
 
 class GenerateAction(argparse.Action):
