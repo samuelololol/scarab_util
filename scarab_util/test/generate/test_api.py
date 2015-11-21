@@ -21,7 +21,7 @@ def generated_API(request, ScarabRoute, ScarabRootPath):
     return {'check_type': check_type,
             'check_route': check_route,
             'check_name': check_name,
-            'command_string': command_string
+            'command_string': command_string,
             }
 
 def test_add_route(ScarabRoute, generated_API):
@@ -41,8 +41,8 @@ def test_add_api(ScarabRootPath, generated_API):
     api_file_path = os.path.join(os.path.join(ScarabRootPath, 'apis'), check_name + '.py')
     print api_file_path
     assert True == os.path.isfile(api_file_path)
-    with open(api_file_path, 'r') as f:
-        print f.read()
+    #with open(api_file_path, 'r') as f:
+    #    print f.read()
 
 def test_add_service(ScarabRootPath, generated_API):
     check_name = generated_API['check_name']
@@ -50,6 +50,12 @@ def test_add_service(ScarabRootPath, generated_API):
     service_file_path = os.path.join(os.path.join(ScarabRootPath, 'services'), check_name + '.py')
     print service_file_path
     assert True == os.path.isfile(service_file_path)
-    with open(service_file_path, 'r') as f:
-        print f.read()
+
+def test_add_api_test(ScarabRootPath, generated_API):
+    check_name = generated_API['check_name']
+
+    test_file_path = os.path.join(os.path.join(ScarabRootPath, 'test'), 'api')
+    api_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
+    print api_test_file_path
+    assert True == os.path.isfile(api_test_file_path)
 

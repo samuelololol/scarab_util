@@ -13,14 +13,18 @@ import os
 def ScarabRootPath(request):
     folder_name = tempfile.mkdtemp()
 
-    apis_dir      = os.path.join(folder_name, 'apis')
-    services_dir  = os.path.join(folder_name, 'services')
-    pages_dir     = os.path.join(folder_name, 'pages')
-    templates_dir = os.path.join(folder_name, 'templates')
-    models_dir    = os.path.join(folder_name, 'models')
-    scripts_dir   = os.path.join(folder_name, 'scripts')
+    apis_dir       = os.path.join(folder_name, 'apis')
+    services_dir   = os.path.join(folder_name, 'services')
+    pages_dir      = os.path.join(folder_name, 'pages')
+    templates_dir  = os.path.join(folder_name, 'templates')
+    models_dir     = os.path.join(folder_name, 'models')
+    scripts_dir    = os.path.join(folder_name, 'scripts')
+    test_dir       = os.path.join(folder_name, 'test')
+    api_test_dir   = os.path.join(test_dir, 'api')
+    model_test_dir = os.path.join(test_dir, 'model')
 
-    for folder in [apis_dir, services_dir, pages_dir, templates_dir, models_dir, scripts_dir]:
+    for folder in [apis_dir, services_dir, pages_dir, templates_dir, models_dir,
+                   scripts_dir, test_dir, api_test_dir, model_test_dir]:
         os.mkdir(folder)
 
     def fin():
