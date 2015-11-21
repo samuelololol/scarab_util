@@ -4,7 +4,7 @@ python:
   - "2.6"
   - "2.7"
 
-env:
-    - PIP_USE_MIRRORS=true
+#env:
+#    - PIP_USE_MIRRORS=true
 install: "python setup.py install"
 script: "python setup.py test"
