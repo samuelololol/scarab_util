@@ -7,7 +7,7 @@ import os
 import jinja2
 
 def add_new_api(folder_root_path, api_name, route_name, file_name, method, api_version):
-    print 'Generating api ...',
+    print 'Generating api ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
         templateEnv = jinja2.Environment(loader=templateLoader)
@@ -26,13 +26,9 @@ def add_new_api(folder_root_path, api_name, route_name, file_name, method, api_v
         with open(api_file_path, 'wb') as f:
             f.write(outputText)
     except Exception, e:
-        print e
+        print 'fail'
         return False
+        print e
+    print 'done'
     return True
 
-#parameters
-# service_name
-# api_classname
-# route_name
-# api_name
-# 
