@@ -23,6 +23,8 @@ def add_new_service(folder_root_path, service_name):
             f.write(outputText)
     except Exception, e:
         print 'fail'
+        exp = sys.exc_info()[0]
+        print exp
         print e
         return False
     print 'done'

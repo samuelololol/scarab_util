@@ -3,6 +3,7 @@
 __date__= 'Nov 21, 2015 '
 __author__= 'samuel'
 
+import sys
 import os
 import jinja2
 
@@ -27,8 +28,10 @@ def add_new_api(folder_root_path, api_name, route_name, file_name, method, api_v
             f.write(outputText)
     except Exception, e:
         print 'fail'
-        return False
+        exp = sys.exc_info()[0]
+        print exp
         print e
+        return False
     print 'done'
     return True
 
