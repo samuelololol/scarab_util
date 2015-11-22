@@ -6,24 +6,45 @@ __author__= 'samuel'
 import os
 from scarab_util.utils.fileOp import InsertAbove
 from scarab_util.utils.fileOp import InsertUnder
+from scarab_util.utils.fileOp import AppendAbove
+from scarab_util.utils.fileOp import AppendUnder
+
 
 def add_new_initial_script(folder_root_path, model_name):
-    print 'Generating DB initial scripts ... (fake)',
-    #route_file_path = os.path.join(folder_root_path, 'routes.py')
-    #if not os.path.isfile(route_file_path):
-    #    print 'fail, "%s" does not exist.' % route_file_path
-    #    return False
-    #with open(route_file_path, 'r') as f:
-    #    for line in f.readlines():
-    #        if route_name in line:
-    #            print 'fail, route_name("%s") already exist.' % route_name
-    #            return False
-    #to_match_string = 'config.add_route('
-    #to_add_string_list = [
-    #    "config.add_route('%s',  api_prefix + '%s' + '%s') #scarab_util generated\n" %\
-    #                     (route_name,   api_version, path)
-    #    ]
-    #InsertAbove(route_file_path, to_add_string_list, to_match_string)
+    print 'Generating DB initial scripts ... ',
+    script_folder = os.path.join(folder_root_path, 'scripts')
+    initscript_file_path = os.path.join(script_folder, 'initializedb.py')
+    if not os.path.isfile(initscript_file_path):
+        print 'fail, "%s" does not exist.' % initscript_file_path
+        return False
+    model_classname = model_name[0].upper() + model_name[1:].lower() + '_TB'
+    check_name = model_classname + '('
+    with open(initscript_file_path, 'r') as f:
+        for line in f.readlines():
+            if check_name in line:
+                print 'fail, script for model("%s") already exist.' % model_classname
+                return False
+
+    # add import
+    to_match_string = 'from ..models.'
+    to_add_string_list = [
+            "from ..models.%s import %s\n" % (model_name, model_classname),
+        ]
+    AppendUnder(initscript_file_path, to_add_string_list, to_match_string,
+                before=["def "])
+
+    # add instance
+    to_match_string = 'DBSession.'
+    to_add_string_list = [
+         "model = %s(%s_name=u'a_uniq_name',\n" % (model_classname, model_name),
+         "           description=u'a brief description',\n",
+         "          )\n",
+         "DBSession.add(model)\n",
+         "DBSession.flush()\n",
+        ]
+    AppendUnder(initscript_file_path, to_add_string_list, to_match_string,
+                after=["with transaction", "def initialization("],
+                before=["def main("])
     print 'done'
     return True
 

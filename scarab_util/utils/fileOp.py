@@ -4,19 +4,47 @@ __date__= 'Nov 20, 2015 '
 __author__= 'samuel'
 
 
-def InsertAbove(file_path, insert_text, target_text):
-    _insert(file_path, insert_text, target_text, under=False)
+def InsertAbove(file_path, insert_text, target_text, after=None, before=None):
+    _insert(file_path, insert_text, target_text, after=after, before=before, under=False)
 
-def InsertUnder(file_path, insert_text, target_text):
-    _insert(file_path, insert_text, target_text, under=True)
+def InsertUnder(file_path, insert_text, target_text, after=None, before=None):
+    _insert(file_path, insert_text, target_text, after=after, before=before, under=True)
 
-def _insert(file_path, insert_text, target_text, under=False):
+def AppendAbove(file_path, insert_text, target_text, after=None, before=None):
+    _append(file_path, insert_text, target_text, after=None, before=before, under=False)
+
+def AppendUnder(file_path, insert_text, target_text, after=None, before=None):
+    _append(file_path, insert_text, target_text, after=None, before=before, under=True)
+
+
+def _insert(file_path, insert_text, target_text, after=None, before=None, under=False):
     filecontent = []
     with open(file_path, 'r') as f:
         for line in f.readlines():
             filecontent.append(line)
 
+    after_status = True if after == None else False
+    before_status = True if before == None else False
     for idx, line in enumerate(filecontent):
+        if before_status != True:
+            if isinstance(before, list):
+                if len([x for x in before if x in line]) > 0:
+                    before_status = True
+                    break
+            else:
+                if before in line:
+                    before_status = True
+                    break
+        if after_status != True:
+            if isinstance(after, list):
+                #after one of string in 'after' list
+                if len([x for x in after if x in line]) > 0:
+                    after_status = True
+                    continue
+            else:
+                if after not in line:
+                    after_status = True
+                    continue
         if target_text in line:
             lineno = idx
             indent_len = len(line) - len(line.lstrip())
@@ -30,6 +58,61 @@ def _insert(file_path, insert_text, target_text, under=False):
     with open(file_path, 'wb') as f:
         for line in filecontent:
             f.write(line)
+
+def _append(file_path, insert_text, target_text, after=None, before=None, under=False):
+    filecontent = []
+    with open(file_path, 'r') as f:
+        for line in f.readlines():
+            filecontent.append(line)
+
+    last_appear_position = -1
+    proper_indent = 0
+
+    after_status = True if after == None else False
+    before_status = True if before == None else False
+
+    for idx, line in enumerate(filecontent):
+        if before_status != True:
+            if isinstance(before, list):
+                if len([x for x in before if x in line]) > 0:
+                    before_status = True
+                    break
+            else:
+                if before in line:
+                    before_status = True
+                    break
+        if after_status != True:
+            if isinstance(after, list):
+                #after one of string in 'after' list
+                if len([x for x in after if x in line]) > 0:
+                    after_status = True
+                    continue
+            else:
+                if after not in line:
+                    after_status = True
+                    continue
+        if target_text in line:
+            last_appear_position = idx
+            proper_indent = len(line) - len(line.lstrip())
+            continue
+
+    #not found
+    if last_appear_position < 0:
+        print 'did not find target string to append'
+        return
+
+    #found then append
+    lineno = last_appear_position
+    proper_indent_text = _normalize_text(insert_text, proper_indent)
+    if under: lineno += 1
+    for insert_line in proper_indent_text:
+        filecontent.insert(lineno, insert_line)
+        lineno += 1
+
+    with open(file_path, 'wb') as f:
+        for line in filecontent:
+            f.write(line)
+
 
 def _normalize_text(text_src, indent_len):
     text_content = []

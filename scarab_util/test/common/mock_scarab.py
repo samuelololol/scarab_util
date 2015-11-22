@@ -38,10 +38,30 @@ def ScarabRoute(ScarabRootPath, request):
     test_folder_path = os.path.dirname(common_folder_path)
     resource_folder_path = os.path.join(test_folder_path, 'resource')
     route_file_path = os.path.join(resource_folder_path, 'routes.py')
+
     shutil.copy(route_file_path, ScarabRootPath)
+
     route_path = os.path.join(ScarabRootPath, 'routes.py')
     def fin():
         os.remove(route_path)
     request.addfinalizer(fin)
     return route_path
+
+@pytest.fixture(scope='function')
+def ScarabInitialScript(ScarabRootPath, request):
+    common_folder_path = os.path.dirname(__file__)
+    test_folder_path = os.path.dirname(common_folder_path)
+    resource_folder_path = os.path.join(test_folder_path, 'resource')
+    initscript_file_path = os.path.join(resource_folder_path, 'initializedb.py')
+    script_folder = os.path.join(ScarabRootPath, 'scripts')
+
+    shutil.copy(initscript_file_path, script_folder)
+
+    initscript_path = os.path.join(script_folder, 'initializedb.py')
+    def fin():
+        #with open(initscript_path, 'r') as f:
+        #    print f.read()
+        os.remove(initscript_path)
+    request.addfinalizer(fin)
+    return initscript_path
 

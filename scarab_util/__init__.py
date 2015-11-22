@@ -73,10 +73,10 @@ class ScarabCmd(object):
                             required=True,
                             choices=['api'],
                             help='Component type')
-        parser.add_argument('-p', '--path', type=str,
+        parser.add_argument('-p', '--path', type=str.lower,
                             default='',
                             help='API URI')
-        parser.add_argument('-n', '--name', type=str,
+        parser.add_argument('-n', '--name', type=str.lower,
                             required=True,
                             help='API name')
         parser.add_argument('-v', '--version', type=str,
@@ -91,6 +91,7 @@ class ScarabCmd(object):
         #default values
         args.rootpath = os.path.abspath(args.rootpath)
         if args.path == '': args.path = '/' + args.name
+        args.name = args.name.lower()
         #print 'debug', args
 
         generate.generate_api(
@@ -110,7 +111,7 @@ class ScarabCmd(object):
                             required=True,
                             choices=['model'],
                             help='Component type')
-        parser.add_argument('-n', '--name', type=str,
+        parser.add_argument('-n', '--name', type=str.lower,
                             required=True,
                             help='Model name')
         parser.add_argument('-r', '--rootpath', type=str,
@@ -121,6 +122,8 @@ class ScarabCmd(object):
 
         #default values
         args.rootpath = os.path.abspath(args.rootpath)
+        args.name = args.name.lower()
+        #print cmd_string
         #print 'debug', args
 
         generate.generate_model(
