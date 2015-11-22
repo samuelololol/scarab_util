@@ -7,6 +7,8 @@ import sys
 import os
 import jinja2
 
+from scarab_util.utils import create_folders
+
 def add_new_model_test(folder_root_path, model_name, file_name):
     print 'Generating model functional test script ... (fake)',
     try:
@@ -24,6 +26,7 @@ def add_new_model_test(folder_root_path, model_name, file_name):
                      'model_name':          model_name,
                      'model_instance_name': 'A_' + model_name[0].upper() + model_name[1:].lower()
                     }
+        create_folders(os.path.join(folder_root_path, 'test'), ['api', 'model'])
         outputText = template.render(variables)
         with open(model_test_file_path, 'wb') as f:
             f.write(outputText)

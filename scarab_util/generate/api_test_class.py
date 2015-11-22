@@ -7,6 +7,8 @@ import sys
 import os
 import jinja2
 
+from scarab_util.utils import create_folders
+
 def add_new_api_test(folder_root_path, api_name, path, route_name, file_name, api_version):
     print 'Generating api functional test script ... ',
     try:
@@ -26,6 +28,7 @@ def add_new_api_test(folder_root_path, api_name, path, route_name, file_name, ap
                      'api_version':   api_version
                     }
         outputText = template.render(variables)
+        create_folders(os.path.join(folder_root_path, 'test'), ['api', 'model'])
         with open(api_test_file_path, 'wb') as f:
             f.write(outputText)
     except Exception, e:
