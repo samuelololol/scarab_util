@@ -37,7 +37,7 @@ def add_new_initial_script(folder_root_path, model_name):
     to_match_string = 'DBSession.'
     to_add_string_list = [
          "#add initial script to %s\n" % model_classname,
-         "----\n",
+         "#----\n",
          "#model = %s(%s_name=u'a_uniq_name',\n" % (model_classname, model_name),
          "#           description=u'a brief description',\n",
          "#          )\n",

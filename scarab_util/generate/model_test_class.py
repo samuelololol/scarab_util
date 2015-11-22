@@ -10,7 +10,7 @@ import jinja2
 from scarab_util.utils import create_folders
 
 def add_new_model_test(folder_root_path, model_name, file_name):
-    print 'Generating model functional test script ... (fake)',
+    print 'Generating model functional test script ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
         templateEnv = jinja2.Environment(loader=templateLoader)
