@@ -51,13 +51,14 @@ def test_add_initial_script(generated_Model):
     #    print f.read()
     assert initial_script_line != ''
 
-#add model test
-#--------------
-#def test_add_model_test(ScarabRootPath, generated_Model):
-#    check_name = generated_Model['check_name']
-#
-#    test_file_path = os.path.join(os.path.join(ScarabRootPath, 'test'), 'model')
-#    model_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
-#    print model_test_file_path
-#    assert True == os.path.isfile(model_test_file_path)
+def test_add_model_test(generated_Model):
+    check_name = generated_Model['check_name']
+    root_path = generated_Model['root_path']
+
+    test_file_path = os.path.join(os.path.join(root_path, 'test'), 'model')
+    model_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
+    print model_test_file_path
+    #with open(model_test_file_path, 'r') as f:
+    #    print f.read()
+    assert True == os.path.isfile(model_test_file_path)
 

@@ -1,0 +1,88 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import unittest
+import pytest
+import transaction
+from pyramid import testing
+import time
+
+from scarab import models
+
+#import os,sys,inspect
+#currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+#parentdir = os.path.dirname(currentdir)
+#sys.path.insert(0,parentdir) 
+#from common.db import DBSession
+#from common.utils import id_generator
+from scarab.test.common.db import DBSession
+from scarab.test.common.utils import id_generator
+
+
+@pytest.fixture(scope='module')
+def {{model_instance_name}}(request, DBSession):
+    {{model_name}}_table = models.{{model_name}}.{{model_classname}}
+    with transaction.manager as tm:
+        {{model_name}} = {{model_name}}_table(
+                            {{model_name}}_name=id_generator(size=7).decode('utf-8'),
+                            description=u'a brief description')
+        DBSession.add({{model_name}})
+        DBSession.flush()
+    print "(fixture)=>{{model_instance_name}} created"
+    def fin():
+        model = DBSession.query({{model_name}}_table).filter(
+                {{model_name}}_table.{{model_name}}_id == {{model_name}}.{{model_name}}_id).scalar()
+        if model:
+            DBSession.delete(model)
+            DBSession.flush()
+            transaction.commit()
+            print '(fixture)=>{{model_instance_name}} delete'
+        if DBSession.dirty:
+            transaction.commit()
+    request.addfinalizer(fin)
+    return {{model_name}}
+
+
+def test_query_{{model_name}}(DBSession, {{model_instance_name}}):
+    {{model_name}}_table = models.account.{{model_classname}}
+    {{model_name}} = DBSession.query({{model_name}}_table).filter(
+            {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
+    assert {{model_name}}.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name
+
+def test_modify_{{model_name}}(DBSession, {{model_instance_name}}):
+    {{model_name}}_table = models.account.{{model_classname}}
+    model = DBSession.query({{model_name}}_table).filter(
+            {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
+    assert model.{{model_name}}_id == {{model_instance_name}}.{{model_name}}_id
+
+    original_{{model_name}}_id = model.{{model_name}}_id
+    new_{{model_name}}_name = id_generator(size=5).decode('utf-8')
+
+    with transaction.manager as tm:
+        {{model_instance_name}}.{{model_name}}_name = new_{{model_name}}_name
+        DBSession.flush()
+        find_{{model_name}} = DBSession.query({{model_name}}_table).filter(
+                {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).scalar()
+        assert find_{{model_name}}.{{model_name}}_id == original_{{model_name}}_id
+
+def test_delete_{{model_name}}(DBSession):
+    {{model_name}}_table = models.account.{{model_classname}}
+    new_{{model_name}}_name = id_generator(size=25).decode('utf-8')
+    with transaction.manager as tm:
+
+        #create
+        new_model = {{model_name}}_table({{model_name}}_name=new_{{model_name}}_name)
+        DBSession.add(new_model)
+        DBSession.flush()
+
+        model = DBSession.query({{model_name}}_table).filter(
+                {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).scalar()
+        assert model
+
+        #delete
+        DBSession.delete(model)
+        DBSession.flush()
+
+        model = DBSession.query({{model_name}}_table).filter(
+                {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).first()
+        assert model == None
+

@@ -9,31 +9,30 @@ import jinja2
 
 def add_new_model_test(folder_root_path, model_name, file_name):
     print 'Generating model functional test script ... (fake)',
-    #try:
-    #    templateLoader = jinja2.FileSystemLoader(searchpath="/")
-    #    templateEnv = jinja2.Environment(loader=templateLoader)
+    try:
+        templateLoader = jinja2.FileSystemLoader(searchpath="/")
+        templateEnv = jinja2.Environment(loader=templateLoader)
 
-    #    API_TEMPLATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-    #            'api_test_template.jinja2')
-    #    template = templateEnv.get_template(API_TEMPLATE_FILE)
+        TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template')
+        MODEL_TEST_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'model_test_template.jinja2')
+        template = templateEnv.get_template(MODEL_TEST_TEMPLATE_FILE)
 
-    #    test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'api')
-    #    api_test_file_path = os.path.join(test_file_path, file_name)
+        test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'model')
+        model_test_file_path = os.path.join(test_file_path, file_name)
 
-    #    variables = {'api_classname': api_name[0].upper() + api_name[1:].lower() + 'API',
-    #                 'api_name':      api_name,
-    #                 'path':          path,
-    #                 'api_version':   api_version
-    #                }
-    #    outputText = template.render(variables)
-    #    with open(api_test_file_path, 'wb') as f:
-    #        f.write(outputText)
-    #except Exception, e:
-    #    print 'fail'
-    #    exp = sys.exc_info()[0]
-    #    print exp
-    #    print e
-    #    return False
+        variables = {'model_classname':     model_name[0].upper() + model_name[1:].lower() + '_TB',
+                     'model_name':          model_name,
+                     'model_instance_name': 'A_' + model_name[0].upper() + model_name[1:].lower()
+                    }
+        outputText = template.render(variables)
+        with open(model_test_file_path, 'wb') as f:
+            f.write(outputText)
+    except Exception, e:
+        print 'fail'
+        exp = sys.exc_info()[0]
+        print exp
+        print e
+        return False
     print 'done'
     return True
 
