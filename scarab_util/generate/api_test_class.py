@@ -13,9 +13,9 @@ def add_new_api_test(folder_root_path, api_name, path, route_name, file_name, ap
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
         templateEnv = jinja2.Environment(loader=templateLoader)
 
-        API_TEMPLATE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                'api_test_template.jinja2')
-        template = templateEnv.get_template(API_TEMPLATE_FILE)
+        TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template')
+        API_TEST_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'api_test_template.jinja2')
+        template = templateEnv.get_template(API_TEST_TEMPLATE_FILE)
 
         test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'api')
         api_test_file_path = os.path.join(test_file_path, file_name)

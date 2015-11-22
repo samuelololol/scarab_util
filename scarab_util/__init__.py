@@ -100,6 +100,34 @@ class ScarabCmd(object):
                      version=args.version
                      )
 
+    def _generate_model(self, cmd_string):
+        description='Generate scarab model component'
+        parser = argparse.ArgumentParser(
+                description=textwrap.dedent(description),
+                formatter_class=RawTextHelpFormatter,
+                )
+        parser.add_argument('-t', '--type', type=str,
+                            required=True,
+                            choices=['model'],
+                            help='Component type')
+        parser.add_argument('-n', '--name', type=str,
+                            required=True,
+                            help='Model name')
+        parser.add_argument('-r', '--rootpath', type=str,
+                            default='.',
+                            help='scarab root folder path')
+
+        args = parser.parse_args(cmd_string)
+
+        #default values
+        args.rootpath = os.path.abspath(args.rootpath)
+        #print 'debug', args
+
+        generate.generate_model(
+                     args.rootpath,
+                     name=args.name,
+                     )
+
 
 class GenerateAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):

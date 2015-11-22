@@ -5,9 +5,12 @@ __author__= 'samuel'
 
 from scarab_util.generate.routes import add_new_route
 from scarab_util.generate.api_class import add_new_api
-from scarab_util.generate.service_class import add_new_service
-from scarab_util.generate.model_class import add_new_model
 from scarab_util.generate.api_test_class import add_new_api_test
+from scarab_util.generate.service_class import add_new_service
+
+from scarab_util.generate.model_class import add_new_model
+from scarab_util.generate.initial_scripts import add_new_initial_script
+from scarab_util.generate.model_test_class import add_new_model_test
 
 def generate_api(folder_root_path, name, path, version):
     route_name = ''
@@ -35,5 +38,20 @@ def generate_api(folder_root_path, name, path, version):
                                    route_name=route_name,
                                    file_name=test_file_name,
                                    api_version=version)
+    return success
+
+def generate_model(folder_root_path, name):
+    file_name = name + '.py'
+    test_file_name = 'test_' + file_name
+
+    success = True
+    if success:
+        success = add_new_model(folder_root_path, model_name=name,
+                                file_name=file_name)
+    if success:
+        success = add_new_initial_script(folder_root_path, model_name=name)
+    if success:
+        success = add_new_model_test(folder_root_path, model_name=name,
+                                     file_name=test_file_name)
     return success
 
