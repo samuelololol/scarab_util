@@ -45,15 +45,26 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
                 if after not in line:
                     after_status = True
                     continue
-        if target_text in line:
-            lineno = idx
-            indent_len = len(line) - len(line.lstrip())
-            proper_indent_text = _normalize_text(insert_text, indent_len)
-            if under: lineno += 1
-            for insert_line in proper_indent_text:
-                filecontent.insert(lineno, insert_line)
-                lineno += 1
-            break
+        if isinstance(target_text, list):
+            if len([x for x in target_text if x in line]) > 0:
+                lineno = idx
+                indent_len = len(line) - len(line.lstrip())
+                proper_indent_text = _normalize_text(insert_text, indent_len)
+                if under: lineno += 1
+                for insert_line in proper_indent_text:
+                    filecontent.insert(lineno, insert_line)
+                    lineno += 1
+                break
+        else:
+            if target_text in line:
+                lineno = idx
+                indent_len = len(line) - len(line.lstrip())
+                proper_indent_text = _normalize_text(insert_text, indent_len)
+                if under: lineno += 1
+                for insert_line in proper_indent_text:
+                    filecontent.insert(lineno, insert_line)
+                    lineno += 1
+                break
 
     with open(file_path, 'wb') as f:
         for line in filecontent:
@@ -91,10 +102,16 @@ def _append(file_path, insert_text, target_text, after=None, before=None, under=
                 if after not in line:
                     after_status = True
                     continue
-        if target_text in line:
-            last_appear_position = idx
-            proper_indent = len(line) - len(line.lstrip())
-            continue
+        if isinstance(target_text, list):
+            if len([x for x in target_text if x in line]) > 0:
+                last_appear_position = idx
+                proper_indent = len(line) - len(line.lstrip())
+                continue
+        else:
+            if target_text in line:
+                last_appear_position = idx
+                proper_indent = len(line) - len(line.lstrip())
+                continue
 
     #not found
     if last_appear_position < 0:
