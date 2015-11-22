@@ -36,11 +36,13 @@ def add_new_initial_script(folder_root_path, model_name):
     # add instance
     to_match_string = 'DBSession.'
     to_add_string_list = [
-         "model = %s(%s_name=u'a_uniq_name',\n" % (model_classname, model_name),
-         "           description=u'a brief description',\n",
-         "          )\n",
-         "DBSession.add(model)\n",
-         "DBSession.flush()\n",
+         "#add initial script to %s\n" % model_classname,
+         "----\n",
+         "#model = %s(%s_name=u'a_uniq_name',\n" % (model_classname, model_name),
+         "#           description=u'a brief description',\n",
+         "#          )\n",
+         "#DBSession.add(model)\n",
+         "#DBSession.flush()\n",
         ]
     AppendUnder(initscript_file_path, to_add_string_list, to_match_string,
                 after=["with transaction", "def initialization("],
