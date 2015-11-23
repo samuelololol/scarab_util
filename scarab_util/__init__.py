@@ -73,7 +73,7 @@ class ScarabCmd(object):
                             required=True,
                             choices=['api'],
                             help='Component type')
-        parser.add_argument('-p', '--path', type=str.lower,
+        parser.add_argument('-p', '--path', type=str,
                             default='',
                             help='API URI')
         parser.add_argument('-n', '--name', type=str.lower,
