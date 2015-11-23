@@ -11,13 +11,10 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 
 
-requires = ['jinja2'
+requires = ['jinja2',
+            'pytest',
+            'pytest-cov',
            ]
-
-requires_test = [
-        'pytest',
-        'pytest-cov',
-        ]
 
 class PyTest(TestCommand):
     def finalize_options(self):
@@ -47,7 +44,7 @@ setup(name='scarab_util',
       zip_safe=False,
       install_requires=requires,
       test_suite='scarab_util',
-      tests_require=requires_test,
+      tests_require=[],
       cmdclass = {'test': PyTest},
       entry_points= """\
       [console_scripts]

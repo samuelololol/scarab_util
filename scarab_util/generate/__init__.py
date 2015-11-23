@@ -12,19 +12,25 @@ from scarab_util.generate.model_class import add_new_model
 from scarab_util.generate.initial_scripts import add_new_initial_script
 from scarab_util.generate.model_test_class import add_new_model_test
 
-def generate_api(folder_root_path, name, path, version):
+def generate_api(folder_root_path, name, path, version=1, prefix=None):
     route_name = ''
     if name[0:4] != 'api_':
         route_name = 'api_%s' % name
     if path[0] != '/':
         path = '/' + path
+    if prefix==None and version==None:
+        version = 1
+    if prefix != None and prefix[0] != '/':
+        prefix = '/' + prefix
     file_name = name + '.py'
     test_file_name = 'test_' + file_name
+
+
 
     success = True
     if success:
         success = add_new_route(folder_root_path, route_name=route_name,
-                                path=path, api_version=version)
+                                path=path, api_version=version, prefix=prefix)
     if success:
         success = add_new_api(folder_root_path, api_name=name,
                               route_name=route_name, file_name=file_name,

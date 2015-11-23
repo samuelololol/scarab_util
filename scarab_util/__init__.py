@@ -79,26 +79,28 @@ class ScarabCmd(object):
         parser.add_argument('-n', '--name', type=str.lower,
                             required=True,
                             help='API name')
-        parser.add_argument('-v', '--version', type=str,
-                            default='1',
-                            help='API version')
         parser.add_argument('-r', '--rootpath', type=str,
                             default='.',
                             help='scarab root folder path')
-
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument('-v', '--version', type=int,
+                            help='API version')
+        group.add_argument('--prefix', type=str,
+                            help='API version')
         args = parser.parse_args(cmd_string)
 
         #default values
         args.rootpath = os.path.abspath(args.rootpath)
         if args.path == '': args.path = '/' + args.name
         args.name = args.name.lower()
-        #print 'debug', args
+        print 'debug', args
 
         generate.generate_api(
                      args.rootpath,
                      path=args.path,
                      name=args.name,
-                     version=args.version
+                     version=args.version,
+                     prefix=args.prefix
                      )
 
     def _generate_model(self, cmd_string):
