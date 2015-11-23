@@ -83,10 +83,10 @@ class ScarabCmd(object):
                             default='.',
                             help='scarab root folder path')
         group = parser.add_mutually_exclusive_group()
-        group.add_argument('-v', '--version', type=int,
+        group.add_argument('--version', type=int,
                             help='API version')
         group.add_argument('--prefix', type=str,
-                            help='API version')
+                            help='API prefix')
         args = parser.parse_args(cmd_string)
 
         #default values
