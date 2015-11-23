@@ -17,7 +17,7 @@ def test_version_argument(ScarabRoute, ScarabRootPath):
     check_name = 'test'
     check_version = '%s' % str(random.randint(0,9))
     command_string = ['scarab', 'generate', '-t', check_type, '-p', check_route,
-            '-n', check_name, '-r', ScarabRootPath, '-v', check_version]
+            '-n', check_name, '-r', ScarabRootPath, '--version', check_version]
     ScarabCmd(command_string)
 
     route_line = ''
@@ -73,7 +73,7 @@ def test_both_argument(ScarabRoute, ScarabRootPath):
     check_name = 'test'
     check_prefix = 'myprefix'
     command_string = ['scarab', 'generate', '-t', check_type, '-p', check_route,
-            '-n', check_name, '-r', ScarabRootPath, '-v', '3', '--prefix',
+            '-n', check_name, '-r', ScarabRootPath, '--version', '3', '--prefix',
             check_prefix,
             ]
 
