@@ -52,29 +52,29 @@ class {{api_classname}}(object):
                 )
     def {{route_name}}_post(self):
         #-----------
-        #create logic
-        #-----------
-        # success, data = {{service_name}}.func()
-        #-----------
         #verify form data
         #-----------
         # {{api_name}}_form = {'parameter1': self.request.POST['parameter1'],
         #      'parameter2': self.request.POST['parameter2']}
         # params = Schema_{{api_name}}_post.to_python(login_form)
-   
+        #-----------
+        #create logic
+        #-----------
+        # success, data = {{service_name}}.func()
+  
         return {'name': '{{api_name}}', 'method': 'POST'}
 
     @view_config(route_name='{{route_name}}', request_method='GET', #permission='view')
                 )
     def {{route_name}}_get(self):
         #-----------
-        #read logic
-        #-----------
-        # success, data = {{service_name}}.func()
-        #-----------
         #verify form body
         #-----------
         # params = Schema_{{api_name}}_get.to_python(self.request.json_body)
+        #-----------
+        #read logic
+        #-----------
+        # success, data = {{service_name}}.func()
 
         return {'name': '{{api_name}}', 'method': 'GET'}
 
@@ -85,6 +85,7 @@ class {{api_classname}}(object):
         #update logic
         #-----------
         # data = {{service_name}}.func()
+
         return {'name': '{{api_name}}', 'method': 'PUT'}
 
     @view_config(route_name='{{route_name}}', request_method='DELETE', #permission='view')
@@ -94,5 +95,6 @@ class {{api_classname}}(object):
         #delete logic
         #-----------
         # success, data = {{service_name}}.func()
+
         return {'name': '{{api_name}}', 'method': 'DELETE'}
 
