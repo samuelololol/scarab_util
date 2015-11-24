@@ -13,6 +13,7 @@ from pyramid.httpexceptions import (
         HTTPUnauthorized,
         )
 
+import formencode
 from formencode import Schema
 from formencode import validators
 from formencode import Invalid
@@ -56,13 +57,13 @@ class {{api_classname}}(object):
         #-----------
         # {{api_name}}_form = {'parameter1': self.request.POST['parameter1'],
         #      'parameter2': self.request.POST['parameter2']}
-        # params = Schema_{{api_name}}_post.to_python(login_form)
+        # params = Schema_{{api_name}}_post.to_python({{api_name}}_form)
         #-----------
         #create logic
         #-----------
         # success, data = {{service_name}}.func()
   
-        return {'name': '{{api_name}}', 'method': 'POST'}
+        return {'name': '{{api_name}}', 'method': 'POST', 'values': params}
 
     @view_config(route_name='{{route_name}}', request_method='GET', #permission='view')
                 )
@@ -76,7 +77,7 @@ class {{api_classname}}(object):
         #-----------
         # success, data = {{service_name}}.func()
 
-        return {'name': '{{api_name}}', 'method': 'GET'}
+        return {'name': '{{api_name}}', 'method': 'GET', 'values': params}
 
     @view_config(route_name='{{route_name}}', request_method='PUT', #permission='view')
                 )
