@@ -12,8 +12,9 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 
 requires = ['jinja2',
-            'pytest',
+            'pytest-capturelog',
             'pytest-cov',
+            'pytest',
            ]
 
 class PyTest(TestCommand):
