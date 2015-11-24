@@ -25,25 +25,32 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
     file_name = name + '.py'
     test_file_name = 'test_' + file_name
 
-
+    #prepare route_path
+    if prefix != None:
+        if prefix == '/':
+            prefix = ''
+        route_path = "'%s'" % (prefix + path)
+    else:
+        to_add_prefix = "api_prefix + '%s' + " % version
+        route_path = to_add_prefix + "'%s'" % path
 
     success = True
     if success:
         success = add_new_route(folder_root_path, route_name=route_name,
-                                path=path, api_version=version, prefix=prefix)
+                                route_path=route_path, prefix=prefix)
     if success:
         success = add_new_api(folder_root_path, api_name=name,
                               route_name=route_name, file_name=file_name,
-                              api_version=version)
+                              )
     if success:
         success = add_new_service(folder_root_path, service_name=name,
                                   file_name=file_name)
     if success:
         success = add_new_api_test(folder_root_path, api_name=name,
-                                   path=path,
+                                   route_path=route_path,
                                    route_name=route_name,
                                    file_name=test_file_name,
-                                   api_version=version)
+                                   )
     return success
 
 def generate_model(folder_root_path, name):

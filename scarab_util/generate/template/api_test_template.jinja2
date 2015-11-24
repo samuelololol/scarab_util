@@ -9,41 +9,41 @@ import json
 
 def test_{{api_name}}_post(ScarabApp):
     #False test
-    #res = ScarabApp.post('/api/v{{api_version}}{{path}}', expect_errors=True)
+    #res = ScarabApp.post('{{path}}', expect_errors=True)
     #assert res.status_int >= 400
 
     #True test
-    res = ScarabApp.post('/api/v{{api_version}}{{path}}', {'key':'value'})
+    res = ScarabApp.post('{{path}}', {'key':'value'})
     print res.body
     assert json.loads(res.body)['method'] == 'POST'
 
 def test_{{api_name}}_get(ScarabApp):
     #False test
-    #res = ScarabApp.get('/api/v{{api_version}}{{path}}', expect_errors=True)
+    #res = ScarabApp.get('{{path}}', expect_errors=True)
     #assert res.status_int >= 400
 
     #True test
-    res = ScarabApp.get('/api/v{{api_version}}{{path}}')
+    res = ScarabApp.get('{{path}}')
     print res.body
     assert json.loads(res.body)['method'] == 'GET'
 
 def test_{{api_name}}_put(ScarabApp):
     #False test
-    #res = ScarabApp.put('/api/v{{api_version}}{{path}}', expect_errors=True)
+    #res = ScarabApp.put('{{path}}', expect_errors=True)
     #assert res.status_int >= 400
 
     #True test
-    res = ScarabApp.put('/api/v{{api_version}}{{path}}', {'key':'value'})
+    res = ScarabApp.put('{{path}}', {'key':'value'})
     print res.body
     assert json.loads(res.body)['method'] == 'PUT'
 
 def test_{{api_name}}_delete(ScarabApp):
     #False test
-    #res = ScarabApp.delete('/api/v{{api_version}}{{path}}', expect_errors=True)
+    #res = ScarabApp.delete('{{path}}', expect_errors=True)
     #assert res.status_int >= 400
 
     #True test
-    res = ScarabApp.delete('/api/v{{api_version}}{{path}}')
+    res = ScarabApp.delete('{{path}}')
     print res.body
     assert json.loads(res.body)['method'] == 'DELETE'
 
