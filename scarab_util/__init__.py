@@ -133,6 +133,38 @@ class ScarabCmd(object):
                      name=args.name,
                      )
 
+    def _generate_page(self, cmd_string):
+        description='Generate scarab page component'
+        parser = argparse.ArgumentParser(
+                description=textwrap.dedent(description),
+                formatter_class=RawTextHelpFormatter,
+                )
+        parser.add_argument('-t', '--type', type=str,
+                            required=True,
+                            choices=['page'],
+                            help='Component type')
+        parser.add_argument('-p', '--path', type=str,
+                            default='',
+                            help='Page URI')
+        parser.add_argument('-n', '--name', type=str.lower,
+                            required=True,
+                            help='Page name')
+        parser.add_argument('-r', '--rootpath', type=str,
+                            default='.',
+                            help='scarab root folder path')
+        args = parser.parse_args(cmd_string)
+
+        #default values
+        args.rootpath = os.path.abspath(args.rootpath)
+        if args.path == '': args.path = '/' + args.name
+        args.name = args.name.lower()
+        print 'debug', args
+
+        generate.generate_page(
+                     args.rootpath,
+                     path=args.path,
+                     name=args.name,
+                     )
 
 class GenerateAction(argparse.Action):
     def __call__(self, parser, namespace, values, option_string=None):

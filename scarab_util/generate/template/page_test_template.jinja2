@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import pytest
+from scarab.test.common.functional import ScarabApp
+
+import webtest
+
+def test_{{page_name}}_get(ScarabApp):
+    #False test
+    #res = ScarabApp.get('{{path}}', expect_errors=True)
+    #assert res.status_int >= 400
+
+    #True test
+    res = ScarabApp.get('{{path}}')
+    print res.body
+    assert 'Hello {{page_name}} Page' in res.lxml.xpath('//body/h1')[0].text
+
+#def test_{{page_name}}_post(ScarabApp):
+#    #False test
+#    #res = ScarabApp.post('{{path}}', expect_errors=True)
+#    #assert res.status_int >= 400
+#
+#    #True test
+#    res = ScarabApp.post('{{path}}', {'key':'value'})
+#    print res.body
+#    assert json.loads(res.body)['method'] == 'POST'
+#
+#def test_{{page_name}}_put(ScarabApp):
+#    #False test
+#    #res = ScarabApp.put('{{path}}', expect_errors=True)
+#    #assert res.status_int >= 400
+#
+#    #True test
+#    res = ScarabApp.put('{{path}}', {'key':'value'})
+#    print res.body
+#    assert json.loads(res.body)['method'] == 'PUT'
+#
+#def test_{{page_name}}_delete(ScarabApp):
+#    #False test
+#    #res = ScarabApp.delete('{{path}}', expect_errors=True)
+#    #assert res.status_int >= 400
+#
+#    #True test
+#    res = ScarabApp.delete('{{path}}')
+#    print res.body
+#    assert json.loads(res.body)['method'] == 'DELETE'
+#

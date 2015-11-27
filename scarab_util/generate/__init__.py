@@ -12,6 +12,10 @@ from scarab_util.generate.model_class import add_new_model
 from scarab_util.generate.initial_scripts import add_new_initial_script
 from scarab_util.generate.model_test_class import add_new_model_test
 
+from scarab_util.generate.page_class import add_new_page
+from scarab_util.generate.template_file import add_new_template
+from scarab_util.generate.page_test_class import add_new_page_test
+
 def generate_api(folder_root_path, name, path, version=1, prefix=None):
     route_name = ''
     if name[0:4] != 'api_':
@@ -63,5 +67,40 @@ def generate_model(folder_root_path, name):
     if success:
         success = add_new_model_test(folder_root_path, model_name=name,
                                      filename=test_filename)
+    return success
+
+def generate_page(folder_root_path, path, name):
+    route_name = ''
+    if name[0:4] != 'page_':
+        route_name = 'page_%s' % name
+    if path[0] != '/':
+        path = '/' + path
+    route_path = path
+
+    filename = name + '.py'
+    service_filename = name + '_p.py'
+    test_filename = 'test_' + filename
+    template_filename = name + '.jinja2'
+
+    success = True
+    if success:
+        success = add_new_route(folder_root_path, route_name=route_name, route_path=route_path)
+    if success:
+        success = add_new_page(folder_root_path, page_name=name, route_name=route_name,
+                               filename=filename, template_filename=template_filename,
+                               )
+    if success:
+        success = add_new_service(folder_root_path, service_name=name, filename=service_filename)
+    if success:
+        success = add_new_template(folder_root_path, page_name=name,
+                                   page_filename=filename,
+                                   template_filename=template_filename)
+    if success:
+        success = add_new_page_test(folder_root_path,
+                                    page_name=name,
+                                    route_path=route_path,
+                                    route_name=route_name,
+                                    filename=test_filename,
+                                    )
     return success
 
