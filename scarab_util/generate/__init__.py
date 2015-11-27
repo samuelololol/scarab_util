@@ -36,15 +36,12 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
 
     success = True
     if success:
-        success = add_new_route(folder_root_path, route_name=route_name,
-                                route_path=route_path, prefix=prefix)
+        success = add_new_route(folder_root_path, route_name=route_name, route_path=route_path)
     if success:
-        success = add_new_api(folder_root_path, api_name=name,
-                              route_name=route_name, filename=filename,
-                              )
+        success = add_new_api(folder_root_path, api_name=name, route_name=route_name,
+                              filename=filename)
     if success:
-        success = add_new_service(folder_root_path, service_name=name,
-                                  filename=filename)
+        success = add_new_service(folder_root_path, service_name=name, filename=filename)
     if success:
         success = add_new_api_test(folder_root_path, api_name=name,
                                    route_path=route_path,

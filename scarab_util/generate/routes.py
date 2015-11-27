@@ -8,7 +8,7 @@ from scarab_util.utils.fileOp import InsertAbove
 from scarab_util.utils.fileOp import InsertUnder
 
 
-def add_new_route(folder_root_path, route_name, route_path, prefix):
+def add_new_route(folder_root_path, route_name, route_path):
     print 'Generating route ... ',
     route_file_path = os.path.join(folder_root_path, 'routes.py')
     if not os.path.isfile(route_file_path):
