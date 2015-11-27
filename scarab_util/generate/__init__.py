@@ -51,6 +51,7 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
                                    route_path=route_path,
                                    route_name=route_name,
                                    filename=test_filename,
+                                   api_version=version,
                                    )
     return success
 

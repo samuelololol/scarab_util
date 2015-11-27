@@ -11,7 +11,7 @@ def test_{{page_name}}_get(ScarabApp):
     #assert res.status_int >= 400
 
     #True test
-    res = ScarabApp.get('{{path}}')
+    res = ScarabApp.get({{path}})
     print res.body
     assert 'Hello {{page_name}} Page' in res.lxml.xpath('//body/h1')[0].text
 
@@ -21,23 +21,23 @@ def test_{{page_name}}_get(ScarabApp):
 #    #assert res.status_int >= 400
 #
 #    #True test
-#    res = ScarabApp.post('{{path}}', {'key':'value'})
+#    res = ScarabApp.post({{path}}, {'key':'value'})
 #    print res.body
 #    assert json.loads(res.body)['method'] == 'POST'
 #
 #def test_{{page_name}}_put(ScarabApp):
 #    #False test
-#    #res = ScarabApp.put('{{path}}', expect_errors=True)
+#    #res = ScarabApp.put({{path}}, expect_errors=True)
 #    #assert res.status_int >= 400
 #
 #    #True test
-#    res = ScarabApp.put('{{path}}', {'key':'value'})
+#    res = ScarabApp.put({{path}}, {'key':'value'})
 #    print res.body
 #    assert json.loads(res.body)['method'] == 'PUT'
 #
 #def test_{{page_name}}_delete(ScarabApp):
 #    #False test
-#    #res = ScarabApp.delete('{{path}}', expect_errors=True)
+#    #res = ScarabApp.delete({{path}}, expect_errors=True)
 #    #assert res.status_int >= 400
 #
 #    #True test
