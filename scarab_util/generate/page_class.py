@@ -13,16 +13,19 @@ def add_new_page(folder_root_path, page_name, route_name, filename, template_fil
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
         templateEnv = jinja2.Environment(loader=templateLoader)
 
+        #src
         TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template')
         Page_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'page_template.jinja2')
         template = templateEnv.get_template(Page_TEMPLATE_FILE)
 
+        #target
         page_file_path = os.path.join(os.path.join(folder_root_path, 'pages'), filename)
-        variables = {'page_classname': page_name[0].upper() + page_name[1:].lower() + 'Page',
+        page_classname = page_name[0].upper() + page_name[1:].lower() + 'Page'
+        variables = {'page_classname': page_classname,
                      'service_name': page_name + '_p',
                      'route_name': route_name,
                      'template_filename': template_filename,
-                     'page_name':page_name,
+                     'page_name': page_name,
                      'page_filename': filename,
                     }
         outputText = template.render(variables)

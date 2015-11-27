@@ -15,7 +15,7 @@ def add_new_template(folder_root_path, page_name, page_filename, template_filena
 
         #source
         TEMPLATE_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'template')
-        Template_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'page_template.jinja2')
+        Template_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'template_template.jinja2')
         template = templateEnv.get_template(Template_TEMPLATE_FILE)
 
         #target

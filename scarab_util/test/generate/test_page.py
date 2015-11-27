@@ -54,12 +54,17 @@ def test_add_service(ScarabRootPath, generated_Page):
 
 def test_add_template(ScarabRootPath, generated_Page):
     check_name = generated_Page['check_name']
+    check_route = generated_Page['check_route']
 
     templates_folder = os.path.join(ScarabRootPath, 'templates')
     template_file_path = os.path.join(templates_folder, check_name + '.jinja2')
     print 'filename: %s ' % template_file_path
     print template_file_path
     assert True == os.path.isfile(template_file_path)
+
+    error_uri = "''%s''" % check_route
+    with open(template_file_path, 'r') as f:
+        assert error_uri not in f.read()
 
 def test_add_page_test(ScarabRootPath, generated_Page):
     check_name = generated_Page['check_name']

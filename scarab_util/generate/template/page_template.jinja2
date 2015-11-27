@@ -29,15 +29,16 @@ import formencode
 #    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
 
 
-@view_config(route_name='{{route_name}}',
-             request_method='GET',
-             renderer='scarab:templates/{{template_filename}}',
-             #permission='view')
-            )
 class {{page_classname}}(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
+
+    @view_config(route_name='{{route_name}}',
+                 request_method='GET',
+                 renderer='scarab:templates/{{template_filename}}',
+                 #permission='view')
+                )
     def {{page_name}}_get(self):
         #-----------
         #verify from body
@@ -52,7 +53,10 @@ class {{page_classname}}(object):
                 'page_filename': '{{page_filename}}',
                 'template_filename': '{{template_filename}}'}
 
-    @view_config(route_name='{{route_name}}', request_method='POST', #permission='view')
+    @view_config(route_name='{{route_name}}',
+                 request_method='POST',
+                 #permission='view',
+                 #renderer='scarab:templates/<some jinja2 file>',
                 )
     def {{route_name}}_post(self):
         #-----------
@@ -68,7 +72,10 @@ class {{page_classname}}(object):
         #
         return {'key': 'POST'}
 
-    @view_config(route_name='{{route_name}}', request_method='PUT', #permission='view')
+    @view_config(route_name='{{route_name}}',
+                 request_method='PUT',
+                 #permission='view',
+                 #renderer='scarab:templates/<some jinja2 file>',
                 )
     def {{route_name}}_put(self):
         #-----------
@@ -78,7 +85,10 @@ class {{page_classname}}(object):
         #
         return {'key': 'PUT'}
 
-    @view_config(route_name='{{route_name}}', request_method='DELETE', #permission='view')
+    @view_config(route_name='{{route_name}}',
+                 request_method='DELETE',
+                 #permission='view',
+                 #renderer='scarab:templates/<some jinja2 file>',
                 )
     def {{route_name}}_delete(self):
         #-----------

@@ -19,6 +19,7 @@ def add_new_page_test(folder_root_path, page_name, route_path, route_name, filen
         API_TEST_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'page_test_template.jinja2')
         template = templateEnv.get_template(API_TEST_TEMPLATE_FILE)
 
+        create_folders(os.path.join(folder_root_path, 'test'), ['page', 'model'])
         test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'page')
         page_test_file_path = os.path.join(test_file_path, filename)
 
@@ -26,7 +27,6 @@ def add_new_page_test(folder_root_path, page_name, route_path, route_name, filen
                      'path':           route_path,
                     }
         outputText = template.render(variables)
-        create_folders(os.path.join(folder_root_path, 'test'), ['page', 'model'])
         with open(page_test_file_path, 'wb') as f:
             f.write(outputText)
     except Exception, e:
