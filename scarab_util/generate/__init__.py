@@ -27,7 +27,7 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
     if prefix != None and prefix[0] != '/':
         prefix = '/' + prefix
     filename = name + '.py'
-    test_filename = 'test_' + filename
+    test_filename = 'test_api_' + filename
 
     #prepare route_path
     if prefix != None:
@@ -79,7 +79,7 @@ def generate_page(folder_root_path, path, name):
     route_path = "'%s'" % path
     filename = name + '.py'
     service_filename = name + '_p.py'
-    test_filename = 'test_' + filename
+    test_filename = 'test_page_' + filename
     template_filename = name + '.jinja2'
 
     success = True
