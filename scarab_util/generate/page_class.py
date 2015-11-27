@@ -19,7 +19,7 @@ def add_new_page(folder_root_path, page_name, route_name, filename, template_fil
 
         page_file_path = os.path.join(os.path.join(folder_root_path, 'pages'), filename)
         variables = {'page_classname': page_name[0].upper() + page_name[1:].lower() + 'Page',
-                     'service_name': page_name,
+                     'service_name': page_name + '_p',
                      'route_name': route_name,
                      'template_filename': template_filename,
                      'page_name':page_name,
