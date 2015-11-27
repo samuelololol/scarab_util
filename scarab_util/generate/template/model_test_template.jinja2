@@ -7,6 +7,7 @@ from pyramid import testing
 import time
 
 from scarab import models
+from scalar.models import DBSession
 
 #import os,sys,inspect
 #currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
@@ -14,12 +15,12 @@ from scarab import models
 #sys.path.insert(0,parentdir) 
 #from common.db import DBSession
 #from common.utils import id_generator
-from scarab.test.common.db import DBSession
+from scarab.test.common.db import engine
 from scarab.test.common.utils import id_generator
 
 
 @pytest.fixture(scope='module')
-def {{model_instance_name}}(request, DBSession):
+def {{model_instance_name}}(request, engine):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     with transaction.manager as tm:
         {{model_name}} = {{model_name}}_table(
@@ -42,13 +43,13 @@ def {{model_instance_name}}(request, DBSession):
     return {{model_name}}
 
 
-def test_query_{{model_name}}(DBSession, {{model_instance_name}}):
+def test_query_{{model_name}}(engine, {{model_instance_name}}):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     {{model_name}} = DBSession.query({{model_name}}_table).filter(
             {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
     assert {{model_name}}.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name
 
-def test_modify_{{model_name}}(DBSession, {{model_instance_name}}):
+def test_modify_{{model_name}}(engine, {{model_instance_name}}):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     model = DBSession.query({{model_name}}_table).filter(
             {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
@@ -64,7 +65,7 @@ def test_modify_{{model_name}}(DBSession, {{model_instance_name}}):
                 {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).scalar()
         assert find_{{model_name}}.{{model_name}}_id == original_{{model_name}}_id
 
-def test_delete_{{model_name}}(DBSession):
+def test_delete_{{model_name}}(engine):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     new_{{model_name}}_name = id_generator(size=25).decode('utf-8')
     with transaction.manager as tm:
