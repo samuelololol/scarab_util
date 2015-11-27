@@ -56,7 +56,7 @@ def test_add_model_test(generated_Model):
     root_path = generated_Model['root_path']
 
     test_file_path = os.path.join(os.path.join(root_path, 'test'), 'model')
-    model_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
+    model_test_file_path = os.path.join(test_file_path, 'test_model_' + check_name + '.py')
     print model_test_file_path
     #with open(model_test_file_path, 'r') as f:
     #    print f.read()

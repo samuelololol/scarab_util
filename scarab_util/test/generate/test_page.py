@@ -70,7 +70,7 @@ def test_add_page_test(ScarabRootPath, generated_Page):
     check_name = generated_Page['check_name']
 
     test_file_path = os.path.join(os.path.join(ScarabRootPath, 'test'), 'page')
-    page_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
+    page_test_file_path = os.path.join(test_file_path, 'test_page_' + check_name + '.py')
     print page_test_file_path
     assert True == os.path.isfile(page_test_file_path)
 

@@ -55,7 +55,7 @@ def test_add_api_test(ScarabRootPath, generated_API):
     check_name = generated_API['check_name']
 
     test_file_path = os.path.join(os.path.join(ScarabRootPath, 'test'), 'api')
-    api_test_file_path = os.path.join(test_file_path, 'test_' + check_name + '.py')
+    api_test_file_path = os.path.join(test_file_path, 'test_api_' + check_name + '.py')
     print api_test_file_path
     assert True == os.path.isfile(api_test_file_path)
 

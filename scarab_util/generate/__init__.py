@@ -57,7 +57,7 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
 
 def generate_model(folder_root_path, name):
     filename = name + '.py'
-    test_filename = 'test_' + filename
+    test_filename = 'test_model_' + filename
 
     success = True
     if success:
