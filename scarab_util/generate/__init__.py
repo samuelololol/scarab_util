@@ -75,8 +75,7 @@ def generate_page(folder_root_path, path, name):
         route_name = 'page_%s' % name
     if path[0] != '/':
         path = '/' + path
-    route_path = path
-
+    route_path = "'%s'" % path
     filename = name + '.py'
     service_filename = name + '_p.py'
     test_filename = 'test_' + filename
