@@ -22,8 +22,8 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
         version = 1
     if prefix != None and prefix[0] != '/':
         prefix = '/' + prefix
-    file_name = name + '.py'
-    test_file_name = 'test_' + file_name
+    filename = name + '.py'
+    test_filename = 'test_' + filename
 
     #prepare route_path
     if prefix != None:
@@ -40,31 +40,31 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
                                 route_path=route_path, prefix=prefix)
     if success:
         success = add_new_api(folder_root_path, api_name=name,
-                              route_name=route_name, file_name=file_name,
+                              route_name=route_name, filename=filename,
                               )
     if success:
         success = add_new_service(folder_root_path, service_name=name,
-                                  file_name=file_name)
+                                  filename=filename)
     if success:
         success = add_new_api_test(folder_root_path, api_name=name,
                                    route_path=route_path,
                                    route_name=route_name,
-                                   file_name=test_file_name,
+                                   filename=test_filename,
                                    )
     return success
 
 def generate_model(folder_root_path, name):
-    file_name = name + '.py'
-    test_file_name = 'test_' + file_name
+    filename = name + '.py'
+    test_filename = 'test_' + filename
 
     success = True
     if success:
         success = add_new_model(folder_root_path, model_name=name,
-                                file_name=file_name)
+                                filename=filename)
     if success:
         success = add_new_initial_script(folder_root_path, model_name=name)
     if success:
         success = add_new_model_test(folder_root_path, model_name=name,
-                                     file_name=test_file_name)
+                                     filename=test_filename)
     return success
 

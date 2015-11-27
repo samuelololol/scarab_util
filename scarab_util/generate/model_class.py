@@ -7,7 +7,7 @@ import sys
 import os
 import jinja2
 
-def add_new_model(folder_root_path, model_name, file_name):
+def add_new_model(folder_root_path, model_name, filename):
     print 'Generating model ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -17,7 +17,7 @@ def add_new_model(folder_root_path, model_name, file_name):
         Model_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'model_template.jinja2')
         template = templateEnv.get_template(Model_TEMPLATE_FILE)
 
-        model_file_path = os.path.join(os.path.join(folder_root_path, 'models'), file_name)
+        model_file_path = os.path.join(os.path.join(folder_root_path, 'models'), filename)
         variables = {'model_classname': model_name[0].upper() + model_name[1:].lower() + '_TB',
                      'model_name':      model_name,
                      'service_name':    model_name,

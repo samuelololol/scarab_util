@@ -7,7 +7,7 @@ import sys
 import os
 import jinja2
 
-def add_new_api(folder_root_path, api_name, route_name, file_name):
+def add_new_api(folder_root_path, api_name, route_name, filename):
     print 'Generating api ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -17,7 +17,7 @@ def add_new_api(folder_root_path, api_name, route_name, file_name):
         API_TEMPLATE_FILE = os.path.join(TEMPLATE_FOLDER, 'api_template.jinja2')
         template = templateEnv.get_template(API_TEMPLATE_FILE)
 
-        api_file_path = os.path.join(os.path.join(folder_root_path, 'apis'), file_name)
+        api_file_path = os.path.join(os.path.join(folder_root_path, 'apis'), filename)
         variables = {'api_classname': api_name[0].upper() + api_name[1:].lower() + 'API',
                      'api_name':api_name,
                      'service_name': api_name,

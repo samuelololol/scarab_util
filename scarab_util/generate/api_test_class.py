@@ -9,7 +9,7 @@ import jinja2
 
 from scarab_util.utils import create_folders
 
-def add_new_api_test(folder_root_path, api_name, route_path, route_name, file_name):
+def add_new_api_test(folder_root_path, api_name, route_path, route_name, filename):
     print 'Generating api functional test script ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -20,7 +20,7 @@ def add_new_api_test(folder_root_path, api_name, route_path, route_name, file_na
         template = templateEnv.get_template(API_TEST_TEMPLATE_FILE)
 
         test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'api')
-        api_test_file_path = os.path.join(test_file_path, file_name)
+        api_test_file_path = os.path.join(test_file_path, filename)
 
         variables = {'api_classname': api_name[0].upper() + api_name[1:].lower() + 'API',
                      'api_name':      api_name,
