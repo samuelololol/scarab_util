@@ -16,7 +16,8 @@ def add_new_route(folder_root_path, route_name, route_path, rtype='api'):
     page:
       - or condition
           - insert above to `config.add_route('page_`
-          - insert above to `config.add_route('home`
+          - insert above to `config.add_route('scarab.page_`
+          - insert above to `config.add_route('scarab.page_home`
     """
     print 'Generating route(%s) ... ' % rtype,
     route_file_path = os.path.join(folder_root_path, 'routes.py')
@@ -32,7 +33,8 @@ def add_new_route(folder_root_path, route_name, route_path, rtype='api'):
     elif rtype == 'page':
         to_match_string = []
         to_match_string.append("config.add_route('page_")
-        to_match_string.append("config.add_route('home")
+        to_match_string.append("config.add_route('scarab.page_")
+        to_match_string.append("config.add_route('scarab.page_home")
 
     to_add_string_list = [
         "config.add_route('%s',  %s) #scarab_util generated\n" % (route_name, route_path)

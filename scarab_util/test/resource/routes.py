@@ -16,6 +16,6 @@ def api_routes(config):
 
     #pages
     config.add_route('scarab.page_login', 'login')
-    config.add_route('home', '/')
+    config.add_route('scarab.home', '/')
 
 

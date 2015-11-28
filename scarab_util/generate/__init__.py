@@ -74,7 +74,7 @@ def generate_model(folder_root_path, name):
 def generate_page(folder_root_path, path, name):
     route_name = ''
     if name[0:4] != 'page_':
-        route_name = 'page_%s' % name
+        route_name = 'scarab.page_%s' % name
     if path[0] != '/':
         path = '/' + path
     route_path = "'%s'" % path
