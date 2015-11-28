@@ -26,8 +26,7 @@ def add_new_route(folder_root_path, route_name, route_path, rtype='api'):
     with open(route_file_path, 'r') as f:
         for line in f.readlines():
             if route_name in line:
-                print 'fail, route_name("%s") already exist.' % route_name
-                return False
+                raise Exception('fail, route_name("%s") already exist.' % route_name)
     if rtype == 'api':
         to_match_string = 'config.add_route('
     elif rtype == 'page':

@@ -31,11 +31,11 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
             if isinstance(before, list):
                 if len([x for x in before if x in line]) > 0:
                     before_status = True
-                    break
+                    continue
             else:
                 if before in line:
                     before_status = True
-                    break
+                    continue
         if after_status != True:
             if isinstance(after, list):
                 #after one of string in 'after' list
@@ -71,7 +71,7 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
 
     if (before_status == False) and (after_status == False):
         raise Exception('before/after not met')
-    if met_status == False:
+    elif met_status == False:
         raise Exception('target not met')
 
     with open(file_path, 'wb') as f:
@@ -95,11 +95,11 @@ def _append(file_path, insert_text, target_text, after=None, before=None, under=
             if isinstance(before, list):
                 if len([x for x in before if x in line]) > 0:
                     before_status = True
-                    break
+                    continue
             else:
                 if before in line:
                     before_status = True
-                    break
+                    continue
         if after_status != True:
             if isinstance(after, list):
                 #after one of string in 'after' list
