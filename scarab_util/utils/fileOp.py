@@ -25,6 +25,7 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
 
     after_status = True if after == None else False
     before_status = True if before == None else False
+    met_status = False
     for idx, line in enumerate(filecontent):
         if before_status != True:
             if isinstance(before, list):
@@ -47,6 +48,7 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
                     continue
         if isinstance(target_text, list):
             if len([x for x in target_text if x in line]) > 0:
+                met_status = True
                 lineno = idx
                 indent_len = len(line) - len(line.lstrip())
                 proper_indent_text = _normalize_text(insert_text, indent_len)
@@ -57,6 +59,7 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
                 break
         else:
             if target_text in line:
+                met_status = True
                 lineno = idx
                 indent_len = len(line) - len(line.lstrip())
                 proper_indent_text = _normalize_text(insert_text, indent_len)
@@ -65,6 +68,11 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
                     filecontent.insert(lineno, insert_line)
                     lineno += 1
                 break
+
+    if (before_status == False) and (after_status == False):
+        raise Exception('before/after not met')
+    if met_status == False:
+        raise Exception('target not met')
 
     with open(file_path, 'wb') as f:
         for line in filecontent:
@@ -81,7 +89,7 @@ def _append(file_path, insert_text, target_text, after=None, before=None, under=
 
     after_status = True if after == None else False
     before_status = True if before == None else False
-
+    met_status = False
     for idx, line in enumerate(filecontent):
         if before_status != True:
             if isinstance(before, list):
@@ -113,10 +121,13 @@ def _append(file_path, insert_text, target_text, after=None, before=None, under=
                 proper_indent = len(line) - len(line.lstrip())
                 continue
 
+    if (before_status == False) and (after_status == False):
+        raise Exception('before/after not met')
+
     #not found
     if last_appear_position < 0:
         print 'did not find target string to append'
-        return
+        raise Exception('target not met')
 
     #found then append
     lineno = last_appear_position

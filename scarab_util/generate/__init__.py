@@ -40,7 +40,8 @@ def generate_api(folder_root_path, name, path, version=1, prefix=None):
 
     success = True
     if success:
-        success = add_new_route(folder_root_path, route_name=route_name, route_path=route_path)
+        success = add_new_route(folder_root_path, route_name=route_name,
+                route_path=route_path, rtype='api')
     if success:
         success = add_new_api(folder_root_path, api_name=name, route_name=route_name,
                               filename=filename)
@@ -84,7 +85,8 @@ def generate_page(folder_root_path, path, name):
 
     success = True
     if success:
-        success = add_new_route(folder_root_path, route_name=route_name, route_path=route_path)
+        success = add_new_route(folder_root_path, route_name=route_name,
+                route_path=route_path, rtype='page')
     if success:
         success = add_new_page(folder_root_path, page_name=name, route_name=route_name,
                                filename=filename, template_filename=template_filename,
