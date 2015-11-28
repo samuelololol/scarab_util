@@ -1,11 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import pytest
-from scarab.test.common.functional import ScarabApp
-
 import webtest
 
-def test_{{page_name}}_get(ScarabApp):
+def test_{{page_name}}_get(sqlite_engine_fixture, ScarabApp):
     #False test
     #res = ScarabApp.get('{{path}}', expect_errors=True)
     #assert res.status_int >= 400
@@ -15,7 +13,7 @@ def test_{{page_name}}_get(ScarabApp):
     print res.body
     assert 'Hello {{page_name}} Page' in res.lxml.xpath('//body/h1')[0].text
 
-#def test_{{page_name}}_post(ScarabApp):
+#def test_{{page_name}}_post(sqlite_engine_fixture, ScarabApp):
 #    #False test
 #    #res = ScarabApp.post('{{path}}', expect_errors=True)
 #    #assert res.status_int >= 400
@@ -25,7 +23,7 @@ def test_{{page_name}}_get(ScarabApp):
 #    print res.body
 #    assert json.loads(res.body)['method'] == 'POST'
 #
-#def test_{{page_name}}_put(ScarabApp):
+#def test_{{page_name}}_put(sqlite_engine_fixture, ScarabApp):
 #    #False test
 #    #res = ScarabApp.put({{path}}, expect_errors=True)
 #    #assert res.status_int >= 400
@@ -35,7 +33,7 @@ def test_{{page_name}}_get(ScarabApp):
 #    print res.body
 #    assert json.loads(res.body)['method'] == 'PUT'
 #
-#def test_{{page_name}}_delete(ScarabApp):
+#def test_{{page_name}}_delete(sqlite_engine_fixture, ScarabApp):
 #    #False test
 #    #res = ScarabApp.delete({{path}}, expect_errors=True)
 #    #assert res.status_int >= 400
