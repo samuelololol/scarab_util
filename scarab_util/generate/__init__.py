@@ -79,6 +79,7 @@ def generate_page(folder_root_path, path, name):
         path = '/' + path
     route_path = "'%s'" % path
     filename = name + '.py'
+    service_name = name + '_p'
     service_filename = name + '_p.py'
     test_filename = 'test_page_' + filename
     template_filename = name + '.jinja2'
@@ -92,7 +93,7 @@ def generate_page(folder_root_path, path, name):
                                filename=filename, template_filename=template_filename,
                                )
     if success:
-        success = add_new_service(folder_root_path, service_name=name, filename=service_filename)
+        success = add_new_service(folder_root_path, service_name=service_name, filename=service_filename)
     if success:
         success = add_new_template(folder_root_path, page_name=name,
                                    page_filename=filename,
