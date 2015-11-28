@@ -5,10 +5,6 @@ __author__= 'samuel'
 
 import os
 import pytest
-from scarab_util.test.common.mock_scarab import ScarabRootPath
-from scarab_util.test.common.mock_scarab import ScarabRoute
-from scarab_util.test.common.mock_scarab import ScarabInitialScript
-
 from scarab_util import ScarabCmd
 
 @pytest.fixture(scope='function')

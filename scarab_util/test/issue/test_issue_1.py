@@ -5,8 +5,6 @@ __author__= 'samuel'
 
 import os
 import pytest
-from scarab_util.test.common.mock_scarab import ScarabRootPath
-from scarab_util.test.common.mock_scarab import ScarabRoute
 import random
 
 from scarab_util import ScarabCmd

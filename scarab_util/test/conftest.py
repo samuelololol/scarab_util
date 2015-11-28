@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-__date__= 'Nov 21, 2015 '
+__date__= 'Nov 28, 2015 '
 __author__= 'samuel'
+import logging
+FORMAT = "%(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s"
+logging.basicConfig(format=FORMAT)
+logging.getLogger().addHandler(logging.StreamHandler())
 
 import pytest
 import tempfile
 import shutil
 import os
-
 
 @pytest.fixture(scope='function')
 def ScarabRootPath(request):
@@ -34,8 +37,7 @@ def ScarabRootPath(request):
 
 @pytest.fixture(scope='function')
 def ScarabRoute(ScarabRootPath, request):
-    common_folder_path = os.path.dirname(__file__)
-    test_folder_path = os.path.dirname(common_folder_path)
+    test_folder_path = os.path.dirname(__file__)
     resource_folder_path = os.path.join(test_folder_path, 'resource')
     route_file_path = os.path.join(resource_folder_path, 'routes.py')
 
@@ -49,8 +51,7 @@ def ScarabRoute(ScarabRootPath, request):
 
 @pytest.fixture(scope='function')
 def ScarabInitialScript(ScarabRootPath, request):
-    common_folder_path = os.path.dirname(__file__)
-    test_folder_path = os.path.dirname(common_folder_path)
+    test_folder_path = os.path.dirname(__file__)
     resource_folder_path = os.path.join(test_folder_path, 'resource')
     initscript_file_path = os.path.join(resource_folder_path, 'initializedb.py')
     script_folder = os.path.join(ScarabRootPath, 'scripts')
