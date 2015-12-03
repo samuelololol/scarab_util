@@ -6,18 +6,21 @@ from scarab.models import DBSession
 def {{service_name}}_func1(parameter1, parameter2):
     # model = DBSession.query(<unknown table>).filter(<unknown table>.<unknown column> == <some value>).scalar()
     # data = model
+    success = True
     data = 'No data here'
     return success, data
 
 def {{service_name}}_func2(parameter1, parameter2, parameter3):
     # model = DBSession.query(<unknown table>).filter(<unknown table>.<unknown column> == <some value>).first()
     # data = model
+    success = True
     data = 'No data here'
     return success, data
 
 def {{service_name}}_func3(parameter1, parameter2, parameter3):
     # model = DBSession.query(<unknown table>).filter(<unknown table>.<unknown column> == <some value>).all()
     # data = model
+    success = True
     data = 'No data here'
     return success, data
 
