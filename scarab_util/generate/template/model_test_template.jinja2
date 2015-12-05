@@ -12,7 +12,7 @@ from utils import id_generator
 
 
 @pytest.fixture(scope='module')
-def {{model_instance_name}}(request, sqlite_engine_fixture):
+def {{model_instance_name}}(request, engine_fixture):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     with transaction.manager as tm:
         {{model_name}} = {{model_name}}_table(
@@ -35,13 +35,13 @@ def {{model_instance_name}}(request, sqlite_engine_fixture):
     return {{model_name}}
 
 
-def test_query_{{model_name}}(sqlite_engine_fixture, {{model_instance_name}}):
+def test_query_{{model_name}}(engine_fixture, {{model_instance_name}}):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     {{model_name}} = DBSession.query({{model_name}}_table).filter(
             {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
     assert {{model_name}}.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name
 
-def test_modify_{{model_name}}(sqlite_engine_fixture, {{model_instance_name}}):
+def test_modify_{{model_name}}(engine_fixture, {{model_instance_name}}):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     model = DBSession.query({{model_name}}_table).filter(
             {{model_name}}_table.{{model_name}}_name == {{model_instance_name}}.{{model_name}}_name).scalar()
@@ -57,7 +57,7 @@ def test_modify_{{model_name}}(sqlite_engine_fixture, {{model_instance_name}}):
                 {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).scalar()
         assert find_{{model_name}}.{{model_name}}_id == original_{{model_name}}_id
 
-def test_delete_{{model_name}}(sqlite_engine_fixture):
+def test_delete_{{model_name}}(engine_fixture):
     {{model_name}}_table = models.{{model_name}}.{{model_classname}}
     new_{{model_name}}_name = id_generator(size=25).decode('utf-8')
     with transaction.manager as tm:
@@ -78,4 +78,26 @@ def test_delete_{{model_name}}(sqlite_engine_fixture):
         model = DBSession.query({{model_name}}_table).filter(
                 {{model_name}}_table.{{model_name}}_name == new_{{model_name}}_name).first()
         assert model == None
+
+def test_{{model_name}}_to_json(engine_fixture, {{model_instance_name}}, MockedRequest):
+    {{model_name}}_table = models.{{model_name}}.{{model_classname}}
+    original_{{model_name}}_id = {{model_instance_name}}.{{model_name}}_id
+    original_{{model_name}}_name = {{model_instance_name}}.{{model_name}}_name
+
+    {{model_name}} = DBSession.query({{model_name}}_table).filter(
+                     {{model_name}}_table.{{model_name}}_id == original_{{model_name}}_id).scalar()
+    
+    {{model_name}}_json = {{model_name}}.to_json(MockedRequest)
+
+    assert True == isinstance({{model_name}}_json, dict)
+    assert {{model_name}}_json['{{model_name}}_id'] == original_{{model_name}}_id
+    assert {{model_name}}_json['{{model_name}}_name'] == original_{{model_name}}_name
+
+def test_{{model_name}}_list_to_array(engine_fixture, {{model_instance_name}}, MockedRequest):
+    {{model_name}}_table = models.{{model_name}}.{{model_classname}}
+    {{model_name}}_list = {{model_name}}_table.all_to_json_array(MockedRequest)
+
+    assert True == isinstance({{model_name}}_list, list)
+    assert {{model_instance_name}}.{{model_name}}_id in [u['{{model_name}}_id'] for u in {{model_name}}_list]
+    assert {{model_instance_name}}.{{model_name}}_name in [u['{{model_name}}_name'] for u in {{model_name}}_list]
 
