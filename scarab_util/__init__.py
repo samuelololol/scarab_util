@@ -55,7 +55,7 @@ class ScarabCmd(object):
                             required=True,
                             action=GenerateAction,
                             type=str,
-                            choices=['api', 'model', 'page'],
+                            choices=['api', 'model', 'page', 'async_api'],
                             help='Component type')
 
         args, others = parser.parse_known_args(self.command_string[2:])
@@ -102,6 +102,50 @@ class ScarabCmd(object):
         print 'debug', args
 
         generate.generate_api(
+                     args.rootpath,
+                     path=args.path,
+                     name=args.name,
+                     version=args.version,
+                     prefix=args.prefix
+                     )
+
+    def _generate_async_api(self, cmd_string):
+        description='Generate scarab async api components'
+        parser = argparse.ArgumentParser(
+                description=textwrap.dedent(description),
+                formatter_class=RawTextHelpFormatter,
+                )
+        parser.add_argument('-t', '--type', type=str,
+                            required=True,
+                            choices=['async_api'],
+                            help='Component type: \'async_api\'',
+                            metavar='')
+        parser.add_argument('-p', '--path', type=str,
+                            default='',
+                            help='Async API URI, as <path>. If --prefix is not specified, --version will be default applied',
+                            metavar='')
+        parser.add_argument('-n', '--name', type=str.lower,
+                            required=True,
+                            help='Async API name',
+                            metavar='')
+        parser.add_argument('-r', '--rootpath', type=str,
+                            default='.',
+                            help='scarab root folder path',
+                            metavar='')
+        group = parser.add_mutually_exclusive_group()
+        group.add_argument('--version', type=int, metavar='',
+                            help='API version(conflict with --prefix), as \'/api/<version>/<path>\', default: \'1\'')
+        group.add_argument('--prefix', type=str, metavar='',
+                            help='Async API prefix(conflict with --version), as \'/<prefix>/<path>\'')
+        args = parser.parse_args(cmd_string)
+
+        #default values
+        args.rootpath = os.path.abspath(args.rootpath)
+        if args.path == '': args.path = '/' + args.name
+        args.name = args.name.lower()
+        print 'debug', args
+
+        generate.generate_async_api(
                      args.rootpath,
                      path=args.path,
                      name=args.name,
