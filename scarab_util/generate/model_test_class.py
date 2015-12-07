@@ -9,7 +9,7 @@ import jinja2
 
 from scarab_util.utils import create_folders
 
-def add_new_model_test(folder_root_path, model_name, filename):
+def add_new_model_test(folder_root_path, name, filename):
     print 'Generating model functional test script ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -22,9 +22,9 @@ def add_new_model_test(folder_root_path, model_name, filename):
         test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'model')
         model_test_file_path = os.path.join(test_file_path, filename)
 
-        variables = {'model_classname':     model_name[0].upper() + model_name[1:].lower() + '_TB',
-                     'model_name':          model_name,
-                     'model_instance_name': 'A_' + model_name[0].upper() + model_name[1:].lower()
+        variables = {'model_classname':     name[0].upper() + name[1:].lower() + '_TB',
+                     'name':                name,
+                     'model_instance_name': 'A_' + name[0].upper() + name[1:].lower()
                     }
         create_folders(os.path.join(folder_root_path, 'test'), ['api', 'model'])
         outputText = template.render(variables)

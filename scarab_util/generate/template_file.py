@@ -7,7 +7,7 @@ import os
 import jinja2
 import sys
 
-def add_new_template(folder_root_path, page_name, page_filename, template_filename):
+def add_new_template(folder_root_path, name, page_filename, template_filename):
     print 'Generating template ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -20,7 +20,7 @@ def add_new_template(folder_root_path, page_name, page_filename, template_filena
 
         #target
         template_file_path = os.path.join(os.path.join(folder_root_path, 'templates'), template_filename)
-        variables = {'page_name': page_name,
+        variables = {'name': name,
                      'page_filename': page_filename,
                      'template_filename': template_filename}
         outputText = template.render(variables)

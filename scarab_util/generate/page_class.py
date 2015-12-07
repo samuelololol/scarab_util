@@ -7,7 +7,7 @@ import sys
 import os
 import jinja2
 
-def add_new_page(folder_root_path, page_name, route_name, filename, template_filename):
+def add_new_page(folder_root_path, name, route_name, filename, template_filename):
     print 'Generating page ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -20,12 +20,12 @@ def add_new_page(folder_root_path, page_name, route_name, filename, template_fil
 
         #target
         page_file_path = os.path.join(os.path.join(folder_root_path, 'pages'), filename)
-        page_classname = page_name[0].upper() + page_name[1:].lower() + 'Page'
+        page_classname = name[0].upper() + name[1:].lower() + 'Page'
         variables = {'page_classname': page_classname,
-                     'service_name': page_name + '_p',
+                     'service_name': name + '_p',
                      'route_name': route_name,
                      'template_filename': template_filename,
-                     'page_name': page_name,
+                     'name': name,
                      'page_filename': filename,
                     }
         outputText = template.render(variables)

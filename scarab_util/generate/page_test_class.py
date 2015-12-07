@@ -9,7 +9,7 @@ import jinja2
 
 from scarab_util.utils import create_folders
 
-def add_new_page_test(folder_root_path, page_name, route_path, route_name, filename):
+def add_new_page_test(folder_root_path, name, route_path, route_name, filename):
     print 'Generating page functional test script ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -23,8 +23,8 @@ def add_new_page_test(folder_root_path, page_name, route_path, route_name, filen
         test_file_path = os.path.join(os.path.join(folder_root_path, 'test'), 'page')
         page_test_file_path = os.path.join(test_file_path, filename)
 
-        variables = {'page_name':      page_name,
-                     'path':           route_path,
+        variables = {'name': name,
+                     'path': route_path,
                     }
         outputText = template.render(variables)
         with open(page_test_file_path, 'wb') as f:

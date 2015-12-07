@@ -27,10 +27,10 @@ import datetime
 
 
 class {{model_classname}}(Base):
-    __tablename__ = '{{model_name}}'
+    __tablename__ = '{{name}}'
 
-    {{model_name}}_id     = Column(Integer,      nullable=False, unique=True, primary_key=True, autoincrement=True)
-    {{model_name}}_name   = Column(Unicode(255), nullable=False, unique=True, index=True)
+    {{name}}_id     = Column(Integer,      nullable=False, unique=True, primary_key=True, autoincrement=True)
+    {{name}}_name   = Column(Unicode(255), nullable=False, unique=True, index=True)
     description     = Column(Unicode(255), nullable=True,  unique=False)
     createddatetime = Column(DateTime,     nullable=False)
     updateddatetime = Column(DateTime,     nullable=False)
@@ -87,12 +87,12 @@ class {{model_classname}}(Base):
     @classmethod
     def _manual_all_to_json_array(cls, ignore=[]):
         logger.debug('sqlite does not implement array_to_json()')
-        {{model_name}}s_list = []
-        {{model_name}}s = DBSession.query(cls).all()
-        if {{model_name}}s != None:
-            for {{model_name}} in {{model_name}}s:
-                {{model_name}}s_list.append({{model_name}}._manual_to_json(ignore=ignore))
-        return {{model_name}}s_list
+        {{name}}s_list = []
+        {{name}}s = DBSession.query(cls).all()
+        if {{name}}s != None:
+            for {{name}} in {{name}}s:
+                {{name}}s_list.append({{name}}._manual_to_json(ignore=ignore))
+        return {{name}}s_list
 
     @classmethod
     def _pg_all_to_json_array(cls, ignore=[]):
@@ -101,13 +101,13 @@ class {{model_classname}}(Base):
             """
             select array_to_json(array_agg(t)) from (
                 select * from %s) t; """ % (cls.__tablename__)
-        {{model_name}}s = DBSession.execute(sql_expression).scalar()
-        logger.debug('json {{model_name}}s: %s' % {{model_name}}s)
-        if {{model_name}}s != None:
-            for {{model_name}} in {{model_name}}s:
+        {{name}}s = DBSession.execute(sql_expression).scalar()
+        logger.debug('json {{name}}s: %s' % {{name}}s)
+        if {{name}}s != None:
+            for {{name}} in {{name}}s:
                 for ig in ignore:
-                    {{model_name}}.pop(ig)
-        return {{model_name}}s
+                    {{name}}.pop(ig)
+        return {{name}}s
 
     def to_json(self, request, ignore=[]):
         json_obj = {}
@@ -123,27 +123,27 @@ class {{model_classname}}(Base):
     def _manual_to_json(self, ignore=[]):
         logger.debug('sqlite does not implement row_to_json()')
         time_format = '%Y-%m-%dT%H:%M:%S%z.%f'
-        {{model_name}} = {}
-        {{model_name}}['{{model_name}}_id'] = self.{{model_name}}_id
-        {{model_name}}['{{model_name}}_name'] = self.{{model_name}}_name
-        {{model_name}}['description'] = self.description
-        {{model_name}}['createddatetime'] = self.createddatetime.strftime(time_format)
-        {{model_name}}['updateddatetime'] = self.updateddatetime.strftime(time_format)
+        {{name}} = {}
+        {{name}}['{{name}}_id'] = self.{{name}}_id
+        {{name}}['{{name}}_name'] = self.{{name}}_name
+        {{name}}['description'] = self.description
+        {{name}}['createddatetime'] = self.createddatetime.strftime(time_format)
+        {{name}}['updateddatetime'] = self.updateddatetime.strftime(time_format)
         for ig in ignore:
-            {{model_name}}.pop(ig)
-        return {{model_name}}
+            {{name}}.pop(ig)
+        return {{name}}
 
-    def _pg_row_to_json(self, ignore=['password', 'salt']):
+    def _pg_row_to_json(self, ignore=[]):
         logger.debug('execute row_to_json()')
         sql_expression = \
             """
             select row_to_json(u) from (
                 select *
-                from %s where {{model_name}}_id = %s) u;
-            """ % (self.__tablename__, self.{{model_name}}_id)
-        {{model_name}} = DBSession.execute(sql_expression).scalar()
-        logger.debug('json {{model_name}}: %s' % {{model_name}})
+                from %s where {{name}}_id = %s) u;
+            """ % (self.__tablename__, self.{{name}}_id)
+        {{name}} = DBSession.execute(sql_expression).scalar()
+        logger.debug('json {{name}}: %s' % {{name}})
         for ig in ignore:
-            {{model_name}}.pop(ig)
-        return {{model_name}}
+            {{name}}.pop(ig)
+        return {{name}}
 

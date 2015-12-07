@@ -7,7 +7,7 @@ import os
 import jinja2
 import sys
 
-def add_new_service(folder_root_path, service_name, filename):
+def add_new_service(folder_root_path, name, filename):
     print 'Generating service ... ',
     try:
         templateLoader = jinja2.FileSystemLoader(searchpath="/")
@@ -18,7 +18,7 @@ def add_new_service(folder_root_path, service_name, filename):
         template = templateEnv.get_template(SERVICE_TEMPLATE_FILE)
 
         service_file_path = os.path.join(os.path.join(folder_root_path, 'services'), filename)
-        variables = {'service_name': service_name}
+        variables = {'name': name}
         outputText = template.render(variables)
         with open(service_file_path, 'wb') as f:
             f.write(outputText)

@@ -21,7 +21,7 @@ from formencode import Schema
 from formencode import validators
 from formencode import Invalid
 
-from scarab.services import {{name}}
+from scarab.services import {{service_name}}
 
 #class Schema_{{name}}_get(Schema):
 #    parameter1 = formencode.validators.String(strip=False, not_empty=True)
@@ -64,7 +64,7 @@ class {{api_classname}}(object):
         #-----------
         #create logic
         #-----------
-        # success, data = {{name}}.func()
+        # success, data = {{service_name}}.func()
   
         return {'name': '{{name}}', 'method': 'POST'}
 
@@ -78,7 +78,7 @@ class {{api_classname}}(object):
         #-----------
         #read logic
         #-----------
-        # success, data = {{name}}.func()
+        # success, data = {{service_name}}.func()
 
         return {'name': '{{name}}', 'method': 'GET'}
 
@@ -88,7 +88,7 @@ class {{api_classname}}(object):
         #-----------
         #update logic
         #-----------
-        # data = {{name}}.func()
+        # data = {{service_name}}.func()
 
         return {'name': '{{name}}', 'method': 'PUT'}
 
@@ -98,7 +98,7 @@ class {{api_classname}}(object):
         #-----------
         #delete logic
         #-----------
-        # success, data = {{name}}.func()
+        # success, data = {{service_name}}.func()
 
         return {'name': '{{name}}', 'method': 'DELETE'}
 

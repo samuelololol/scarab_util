@@ -16,6 +16,9 @@ def AppendAbove(file_path, insert_text, target_text, after=None, before=None):
 def AppendUnder(file_path, insert_text, target_text, after=None, before=None):
     _append(file_path, insert_text, target_text, after=None, before=before, under=True)
 
+def AppendBottom(file_path, insert_text):
+    _append(file_path, insert_text, bottom=True)
+
 
 def _insert(file_path, insert_text, target_text, after=None, before=None, under=False):
     filecontent = []
@@ -78,64 +81,71 @@ def _insert(file_path, insert_text, target_text, after=None, before=None, under=
         for line in filecontent:
             f.write(line)
 
-def _append(file_path, insert_text, target_text, after=None, before=None, under=False):
+def _append(file_path, insert_text, target_text=None, after=None, before=None, under=False, bottom=False):
     filecontent = []
     with open(file_path, 'r') as f:
         for line in f.readlines():
             filecontent.append(line)
 
-    last_appear_position = -1
-    proper_indent = 0
+    if bottom:
+        for line in insert_text:
+            filecontent.append(line)
+    else:
+        #target_text argument is requried
+        if target_text == None:
+            raise Exception('target_text cannot be None')
+        last_appear_position = -1
+        proper_indent = 0
 
-    after_status = True if after == None else False
-    before_status = True if before == None else False
-    met_status = False
-    for idx, line in enumerate(filecontent):
-        if before_status != True:
-            if isinstance(before, list):
-                if len([x for x in before if x in line]) > 0:
-                    before_status = True
+        after_status = True if after == None else False
+        before_status = True if before == None else False
+        met_status = False
+        for idx, line in enumerate(filecontent):
+            if before_status != True:
+                if isinstance(before, list):
+                    if len([x for x in before if x in line]) > 0:
+                        before_status = True
+                        continue
+                else:
+                    if before in line:
+                        before_status = True
+                        continue
+            if after_status != True:
+                if isinstance(after, list):
+                    #after one of string in 'after' list
+                    if len([x for x in after if x in line]) > 0:
+                        after_status = True
+                        continue
+                else:
+                    if after not in line:
+                        after_status = True
+                        continue
+            if isinstance(target_text, list):
+                if len([x for x in target_text if x in line]) > 0:
+                    last_appear_position = idx
+                    proper_indent = len(line) - len(line.lstrip())
                     continue
             else:
-                if before in line:
-                    before_status = True
+                if target_text in line:
+                    last_appear_position = idx
+                    proper_indent = len(line) - len(line.lstrip())
                     continue
-        if after_status != True:
-            if isinstance(after, list):
-                #after one of string in 'after' list
-                if len([x for x in after if x in line]) > 0:
-                    after_status = True
-                    continue
-            else:
-                if after not in line:
-                    after_status = True
-                    continue
-        if isinstance(target_text, list):
-            if len([x for x in target_text if x in line]) > 0:
-                last_appear_position = idx
-                proper_indent = len(line) - len(line.lstrip())
-                continue
-        else:
-            if target_text in line:
-                last_appear_position = idx
-                proper_indent = len(line) - len(line.lstrip())
-                continue
 
-    if (before_status == False) and (after_status == False):
-        raise Exception('before/after not met')
+        if (before_status == False) and (after_status == False):
+            raise Exception('before/after not met')
 
-    #not found
-    if last_appear_position < 0:
-        print 'did not find target string to append'
-        raise Exception('target not met')
+        #not found
+        if last_appear_position < 0:
+            print 'did not find target string to append'
+            raise Exception('target not met')
 
-    #found then append
-    lineno = last_appear_position
-    proper_indent_text = _normalize_text(insert_text, proper_indent)
-    if under: lineno += 1
-    for insert_line in proper_indent_text:
-        filecontent.insert(lineno, insert_line)
-        lineno += 1
+        #found then append
+        lineno = last_appear_position
+        proper_indent_text = _normalize_text(insert_text, proper_indent)
+        if under: lineno += 1
+        for insert_line in proper_indent_text:
+            filecontent.insert(lineno, insert_line)
+            lineno += 1
 
     with open(file_path, 'wb') as f:
         for line in filecontent:

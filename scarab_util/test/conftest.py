@@ -26,9 +26,13 @@ def ScarabRootPath(request):
     api_test_dir   = os.path.join(test_dir, 'api')
     model_test_dir = os.path.join(test_dir, 'model')
 
+    dev_ini_path   = os.path.join(os.path.dirname(folder_name), 'development.ini')
+
     for folder in [apis_dir, services_dir, pages_dir, templates_dir, models_dir,
                    scripts_dir, test_dir, api_test_dir, model_test_dir]:
         os.mkdir(folder)
+
+    open(dev_ini_path, 'a').close()
 
     def fin():
         shutil.rmtree(folder_name)

@@ -8,22 +8,22 @@ from scarab.services import {{service_name}}
 
 import formencode
 
-#class Schema_{{page_name}}_get(Schema):
+#class Schema_{{name}}_get(Schema):
 #    parameter1 = formencode.validators.String(strip=False, not_empty=True)
 #    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
 #    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
 #
-#class Schema_{{page_name}}_post(Schema):
+#class Schema_{{name}}_post(Schema):
 #    parameter1 = formencode.validators.String(strip=False, not_empty=True)
 #    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
 #    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
 #
-#class Schema_{{page_name}}_put(Schema):
+#class Schema_{{name}}_put(Schema):
 #    parameter1 = formencode.validators.String(strip=False, not_empty=True)
 #    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
 #    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
 #
-#class Schema_{{page_name}}_delete(Schema):
+#class Schema_{{name}}_delete(Schema):
 #    parameter1 = formencode.validators.String(strip=False, not_empty=True)
 #    parameter2 = formencode.validators.PhoneNumber(strip=True, not_empty=True) 
 #    parameter3 = formencode.validators.Email(resolve_domain=True, not_empty=True)
@@ -39,17 +39,17 @@ class {{page_classname}}(object):
                  renderer='scarab:templates/{{template_filename}}',
                  #permission='view')
                 )
-    def {{page_name}}_get(self):
+    def {{name}}_get(self):
         #-----------
         #verify from body
         #-----------
-        # params = Schema_{{page_name}}_get.to_python(self.request.json_body)
+        # params = Schema_{{name}}_get.to_python(self.request.json_body)
         #-----------
         #read logic
         #-----------
         # success, data = {{service_name}}.func()
 
-        return {'page_name': '{{page_name}}',
+        return {'page_name': '{{name}}',
                 'page_filename': '{{page_filename}}',
                 'template_filename': '{{template_filename}}'}
 
@@ -58,13 +58,13 @@ class {{page_classname}}(object):
                  #permission='view',
                  #renderer='scarab:templates/<some jinja2 file>',
                 )
-    def {{page_name}}_post(self):
+    def {{name}}_post(self):
         #-----------
         #verify form data
         #-----------
-        # {{page_name}}_form = {'parameter1': self.request.POST['parameter1'],
+        # {{name}}_form = {'parameter1': self.request.POST['parameter1'],
         #      'parameter2': self.request.POST['parameter2']}
-        # params = Schema_{{page_name}}_post.to_python({{page_name}}_form)
+        # params = Schema_{{name}}_post.to_python({{name}}_form)
         #-----------
         #create logic
         #-----------
@@ -77,7 +77,7 @@ class {{page_classname}}(object):
                  #permission='view',
                  #renderer='scarab:templates/<some jinja2 file>',
                 )
-    def {{page_name}}_put(self):
+    def {{name}}_put(self):
         #-----------
         #update logic
         #-----------
@@ -90,7 +90,7 @@ class {{page_classname}}(object):
                  #permission='view',
                  #renderer='scarab:templates/<some jinja2 file>',
                 )
-    def {{page_name}}_delete(self):
+    def {{name}}_delete(self):
         #-----------
         #delete logic
         #-----------
