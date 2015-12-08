@@ -15,12 +15,12 @@ def add_new_async_service(folder_root_path, name, filename):
     1. yes, append broke function
     2. no, create and append broker function
     """
-    print 'Generating service(asnyc) ... ',
     service_file_path = os.path.join(os.path.join(folder_root_path, 'services'), filename)
     if not os.path.isfile(service_file_path):
         #1. add service file
         add_new_service(folder_root_path, name, filename)
 
+    print 'Generating service(asnyc) ... ',
     #2. append broker function
     import_to_add = ['from pyramid_celery import celery_app as app\n']
     function_to_add = [
