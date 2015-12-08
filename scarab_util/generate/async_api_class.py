@@ -46,7 +46,7 @@ def add_new_async_api(folder_root_path, name, route_name, filename):
                 lib_line = line
     if lib_line == '':
         target_line = 'celery[redis]'
-        lib_to_add = "'%s,\n'" % check_lib
+        lib_to_add = "'%s',\n" % check_lib
         InsertAbove(setup_py_path, [lib_to_add], target_line)
 
     try:
