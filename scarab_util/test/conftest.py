@@ -33,6 +33,12 @@ def ScarabRootPath(request):
         os.mkdir(folder)
 
     open(dev_ini_path, 'a').close()
+    #copy setup.py
+    parent_folder = os.path.dirname(folder_name)
+    test_folder_path = os.path.dirname(__file__)
+    resource_folder_path = os.path.join(test_folder_path, 'resource')
+    setup_file_path = os.path.join(resource_folder_path, 'setup.py')
+    shutil.copy(setup_file_path, parent_folder)
 
     def fin():
         shutil.rmtree(folder_name)
